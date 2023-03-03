@@ -53,8 +53,8 @@ public class FormController {
     }
 
     @GetMapping("/booking")
-    public String personForm(@ModelAttribute("person") Person person, BindingResult bindingResult,
-                             @ModelAttribute("booking") Booking booking){
+    public String personForm(@ModelAttribute("person") Person person){
+        if(booking == null) return "redirect:/";
         return "formControl/person_form";
     }
 

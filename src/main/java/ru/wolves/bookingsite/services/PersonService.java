@@ -25,6 +25,7 @@ public class PersonService {
 
     @Transactional
     public void savePersonWithBooking(Person person, Booking booking){
+        if(person.getPost().equals("Работник")) person.setCourse(-1);
         booking.setBookedAt(new Date());
         person.setBookingList(new ArrayList<>());
         bookingRepo.save(booking);
