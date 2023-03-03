@@ -5,11 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.RoomHall;
@@ -17,9 +13,7 @@ import ru.wolves.bookingsite.services.BookingService;
 import ru.wolves.bookingsite.services.PersonService;
 import ru.wolves.bookingsite.services.RoomHallService;
 import ru.wolves.bookingsite.util.BookingValidator;
-
-import java.util.ArrayList;
-import java.util.Date;
+import ru.wolves.bookingsite.util.PersonValidator;
 
 @Controller
 public class FormController {
@@ -27,13 +21,16 @@ public class FormController {
     private final RoomHallService roomHallService;
     private final BookingService bookingService;
     private final BookingValidator bookingValidator;
+    private final PersonValidator personValidator;
+    private Booking booking;
 
     @Autowired
-    public FormController(PersonService personService, RoomHallService roomHallService, BookingService bookingService, BookingValidator bookingValidator) {
+    public FormController(PersonService personService, RoomHallService roomHallService, BookingService bookingService, BookingValidator bookingValidator, PersonValidator personValidator) {
         this.personService = personService;
         this.roomHallService = roomHallService;
         this.bookingService = bookingService;
         this.bookingValidator = bookingValidator;
+        this.personValidator = personValidator;
     }
     @GetMapping("/")
     public String placeForm(@ModelAttribute("booking") Booking booking,
@@ -43,34 +40,32 @@ public class FormController {
     }
     @PostMapping("/")
     public String savePlace(@Valid @ModelAttribute("booking") Booking booking,
-                            BindingResult bindingResult, Model model,
-                            RedirectAttributes redirectAttrs){
+                            BindingResult bindingResult, Model model){
 
         bookingValidator.validate(booking,bindingResult);
         if(bindingResult.hasErrors()) {
-            model.addAttribute("halls",roomHallService.findAllRoomHall());
+            model.addAttribute("halls", roomHallService.findAllRoomHall());
             return "formControl/place_form";
         }
-
-        bookingService.saveBooking(booking);
-        redirectAttrs.addFlashAttribute("booking",booking);
+        this.booking = booking;
         return "redirect:/booking";
 
     }
 
     @GetMapping("/booking")
-    public String personForm(@ModelAttribute("person") Person person,
-                             @ModelAttribute("booking") Booking booking,
-                             Model model){
+    public String personForm(@ModelAttribute("person") Person person, BindingResult bindingResult,
+                             @ModelAttribute("booking") Booking booking){
         return "formControl/person_form";
     }
 
-    @PostMapping("/booking/{booking_id}")
-    public String addBooking(@PathVariable("booking_id") int booking_id,
-                             @Valid @ModelAttribute("person") Person person,
-                             BindingResult bindingResult, Model model){
-        Booking booking = bookingService.findBooking(booking_id).get();
-        personService.savePerson(person, booking);
+    @PostMapping("/booking")
+    public String addBooking(@Valid @ModelAttribute("person") Person person,
+                             BindingResult bindingResult){
+        personValidator.validate(person,bindingResult);
+        if(bindingResult.hasErrors()) {
+            return "formControl/person_form";
+        }
+        personService.savePersonWithBooking(person, booking);
         return "booking/success";
     }
 }

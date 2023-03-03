@@ -15,24 +15,24 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty
+    @NotEmpty(message = "Поле не может быть пустным")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotEmpty
+    @NotEmpty(message = "Поле не может быть пустным")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotEmpty
+    @NotEmpty(message = "Поле не может быть пустным")
     @Column(name = "middle_name")
     private String middleName;
 
     @NotEmpty
     @Column(name = "post")
     private String post;
-    @NotEmpty
+
     @Column(name = "phone")
-    @Pattern(regexp = "\\+\\d{11}", message = "please enter existing phone number")
+    @Pattern(regexp = "\\+\\d{11}", message = "Введите существующий номер")
     private String phoneNumber;
     @Column(name = "institute")
     private String institute;
