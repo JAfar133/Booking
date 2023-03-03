@@ -1,0 +1,9 @@
+.btn{
+    width:max(350px,30%);
+}
+body{
+    background-image: linear-gradient(#25A2E0 20%, #A9BCCA 60%, #505050 15%, #2B2B2B);
+}
+label{
+    color:#D8D8DA;
+}

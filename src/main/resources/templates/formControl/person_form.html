@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Бронирование</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{styles/css/header.css}">
+    <link rel="stylesheet" th:href="@{styles/css/main.css}">
+
+</head>
+<body >
+    <div th:insert="blocks/header :: header"></div>
+    <div class="container" style="padding-top: min(200px,15%)">
+        <div class="container" style="width: 90%; height:50%">
+            <div class="mb-4" style="display: flex; justify-content: center">
+                <h1 style="color: #D8D8DA; margin-bottom: 10px">Предоставьте информацию о вас</h1>
+            </div>
+            <hr style="background-color: #D8D8DA; margin-bottom: 10px">
+            <br>
+            <form th:action="@{/booking/{booking_id}(booking_id=${booking.id})}" th:method="post" th:object="${person}" name="person">
+                <div class="container" style="width: 90%">
+                    <div class="form-group">
+                        <input placeholder="Фамилия"class="form-control" th:field="*{lastName}" type="text" name="last_name" id="last_name">
+                        <span style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <input placeholder="Имя" class="form-control" th:field="*{firstName}" type="text" name="first_name" id="first_name">
+                            <span style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
+                        </div>
+                        <div class="col">
+                            <input placeholder="Отчество" class="form-control" th:field="*{middleName}" type="text" name="middle_name" id="middle_name">
+                            <span style="color:red" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"/>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input placeholder="Номер телефона"class="form-control" th:field="*{phoneNumber}" type="text" name="phone" id="phone">
+                        <div style="color:red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"/>
+                    </div>
+                    <div class="form-group mt-3">
+                        <select th:field="*{post}" style="color: #6C757D" class="form-control" aria-label="Default select example">
+                            <option th:value="Должность" th:text="Должность" disabled selected></option>
+                            <option th:value="Студент" th:text="Студент" id="student"></option>
+                            <option th:value="Работник" th:text="Работник" id="worker"></option>
+                        </select>
+                    </div>
+                    <div class="form-row student mb-4">
+                        <div class="col">
+                            <input placeholder="Институт"class="form-control" th:field="*{institute}" type="text" name="institute" id="institute">
+                            <div style="color:red" th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"/>
+                        </div>
+                        <div class="col">
+                            <select th:field="*{course}" style="color: #6C757D" class="form-control" aria-label="Default select example">
+                                <option th:value="'-1'" disabled selected th:text="Курс"></option>
+                                <option th:value="'1'" th:text="1"></option>
+                                <option th:value="'2'"th:text="2"></option>
+                                <option th:value="'3'"th:text="3"></option>
+                                <option th:value="'4'"th:text="4"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class=" form-group worker mb-4" style="display: none; width: 100%">
+                        <input placeholder="Какой структуры"class="form-control" th:field="*{structure}" type="text" name="structure" id="structure">
+                        <div style="color:red" th:if="${#fields.hasErrors('structure')}" th:errors="*{structure}"/>
+                    </div>
+                    <div class="container buttons" style="display: flex; justify-content: space-around">
+                        <input class="btn btn-info" type="submit" name="booking" id="booking" value="Забронировать">
+                        <a class="btn btn-secondary " role="button" th:href="@{/}">Назад</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="js/selectScript.js"></script>
+</body>
+</html>

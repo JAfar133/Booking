@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Бронирование</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css" />
+  <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Подключаем локаль библиотеки moment -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ru.js"></script>
+  <!-- Подключаем библиотеку moment -->
+  <script data-require="MomentJS@2.10.0" data-semver="2.10.0" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+  <!-- Подключаем js-файл Bootstrap -->
+  <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Подключаем js-файл библиотеки DateTimePicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+  <link rel="stylesheet" th:href="@{styles/css/header.css}">
+  <link rel="stylesheet" th:href="@{styles/css/main.css}">
+
+
+</head>
+<body >
+  <div th:insert="~{blocks/header :: header}"></div>
+  <div class="container" style="padding-top: min(200px,15%)">
+    <div class="mb-4" style="display: flex; justify-content: center">
+      <h1 style="color: #D8D8DA; margin-bottom: 10px">Выберите место и время бронирования</h1>
+    </div>
+    <hr style="background-color: #D8D8DA; margin-bottom: 10px">
+    <br>
+    <div class="container" style="width: 90%; height:50%">
+      <form th:action="@{/}" th:method="post" th:object="${booking}">
+        <div class="form-group mt-3">
+          <select th:field="*{place}" style="color: #6C757D" class="form-control" aria-label="Default select example">
+            <option th:each="room : ${halls}" th:value="${room.id}" th:text="${room.name+' - '+room.address}"></option>
+          </select>
+          <div class="alert alert-danger" th:if="${#fields.hasErrors('place')}" th:errors="*{place}"/>
+        </div>
+        <div class="form-group mt-3" >
+            <label for="dateStart">Выберите дату</label>
+            <input class="form-control" th:field="*{date}" type="date" id="dateStart" name="date" xml:lang="ru"/>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"/>
+        </div>
+        <div class="form-row mb-4">
+          <div class="col">
+            <label for="timeStart">Начало</label>
+            <input class="form-control" th:field="*{timeStart}" type="time" id="timeStart" name="time"/>
+            <div class="alert alert-danger"th:if="${#fields.hasErrors('timeStart')}" th:errors="*{timeStart}"/>
+          </div>
+          <div class="col">
+            <label for="timeEnd">Конец</label>
+            <input class="form-control" th:field="*{timeEnd}" type="time" id="timeEnd" name="time"/>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"/>
+          </div>
+        </div>
+        <div style="display: flex; width: 100%">
+          <input class="btn btn-info" type="submit" value="Продолжить"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
