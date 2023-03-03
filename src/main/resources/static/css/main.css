@@ -7,3 +7,7 @@ body{
 label{
     color:#D8D8DA;
 }
+select{
+    color:#000;
+    background-color: #E8F0FE;
+}
