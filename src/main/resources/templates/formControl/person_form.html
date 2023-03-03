@@ -71,7 +71,43 @@
                     </div>
                 </div>
             </form>
+            <hr style="background-color: #D8D8DA; margin-bottom: 10px">
+            <h5 style="color:#fff" >Местоположение</h5>
+            <span style="color:#fff" th:text="${booking.place.address}"></span>
+            <div class="container" id="map" style="width: 100%; height: 400px"></div>
         </div>
+        <script src="https://api-maps.yandex.ru/2.0-stable/?apikey=58a2c036-d3dc-4114-9bd3-1f7483845947&load=package.standard&lang=ru-RU" type="text/javascript"></script>
+
+        <script th:inline="javascript">
+            ymaps.ready(init);
+            var myMap,
+                myPlacemark;
+            function init(){
+                let lat = /*[[${booking.place.lat}]]*/;
+                let lon = /*[[${booking.place.lon}]]*/;
+                console.log(lat+" "+lon)
+                myMap = new ymaps.Map ("map", {
+                    center: [lon, lat],
+                    zoom: 15,
+                    behaviors: ['ruler', 'scrollZoom'],
+                    geoObjectDraggable: true
+                });
+                myPlacemark = new ymaps.Placemark([lon, lat], {
+                },{
+                    // Опции.
+                    // Необходимо указать данный тип макета.
+                    iconLayout: 'default#image',
+                    // Своё изображение иконки метки.
+                    iconImageHref: 'icon/wing.png',
+                    iconImageSize: [60, 70],
+                });
+
+                myMap.geoObjects.add(myPlacemark);
+                myMap.controls.add(new ymaps.control.MiniMap({type:'yandex#hybrid'},{zoomOffset: 5}));
+                myMap.controls.add('searchControl');
+                myMap.behaviors.enable(['drag', 'rightMouseButtonMagnifier'])
+            }
+        </script>
     </div>
     <script src="js/selectScript.js"></script>
 </body>
