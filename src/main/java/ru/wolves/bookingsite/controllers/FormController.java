@@ -36,6 +36,7 @@ public class FormController {
     public String placeForm(@ModelAttribute("booking") Booking booking,
                             @ModelAttribute("roomHall") RoomHall roomHall, Model model){
         model.addAttribute("halls",roomHallService.findAllRoomHall());
+        this.booking = null;
         return "formControl/place_form";
     }
     @PostMapping("/")
@@ -53,8 +54,9 @@ public class FormController {
     }
 
     @GetMapping("/booking")
-    public String personForm(@ModelAttribute("person") Person person){
+    public String personForm(@ModelAttribute("person") Person person, Model model){
         if(booking == null) return "redirect:/";
+        model.addAttribute("booking",booking);
         return "formControl/person_form";
     }
 
