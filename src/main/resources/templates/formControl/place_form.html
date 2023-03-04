@@ -38,18 +38,32 @@
         </div>
         <div class="form-group mt-3" >
             <label for="dateStart">Выберите дату</label>
-            <input class="form-control" th:field="*{date}" type="date" id="dateStart" name="date" xml:lang="ru"/>
+            <input class="form-control"
+                   type="date" id="dateStart" required name="date" xml:lang="ru"
+                   th:field="*{date}"
+                   th:value="${current_date}"
+                   th:min="${current_date}"/>
             <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"/>
         </div>
         <div class="form-row mb-4">
           <div class="col">
             <label for="timeStart">Начало</label>
-            <input class="form-control" th:field="*{timeStart}" type="time" id="timeStart" name="time"/>
+            <input class="form-control"
+                   th:field="*{timeStart}" type="time" id="timeStart" name="time"
+                   step="600"
+                   min="08:30"
+                   max="19:30"
+                   required/>
             <div class="alert alert-danger"th:if="${#fields.hasErrors('timeStart')}" th:errors="*{timeStart}"/>
           </div>
           <div class="col">
             <label for="timeEnd">Конец</label>
-            <input class="form-control" th:field="*{timeEnd}" type="time" id="timeEnd" name="time"/>
+            <input class="form-control"
+                   th:field="*{timeEnd}" type="time" id="timeEnd" name="time"
+                   step="600"
+                   min="09:30"
+                   max="20:30"
+                   required/>
             <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"/>
           </div>
         </div>
