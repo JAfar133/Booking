@@ -1,25 +1,17 @@
 package ru.wolves.bookingsite.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.wolves.bookingsite.models.RoomHall;
-import ru.wolves.bookingsite.repositories.RoomHallRepo;
 
 import java.util.List;
 
-@Service
-@Transactional(readOnly = true)
-public class RoomHallService {
+public interface RoomHallService {
+    RoomHall findRoom(int id);
+    RoomHall findRoom(String name);
+    List<RoomHall> findAllRoomHall();
+    void saveRoom(RoomHall roomHall);
 
-    private final RoomHallRepo roomHallRepo;
+    RoomHall updateRoom(RoomHall roomhall);
 
-    @Autowired
-    public RoomHallService(RoomHallRepo roomHallRepo) {
-        this.roomHallRepo = roomHallRepo;
-    }
+    void deleteRoomHall(int id);
 
-    public List<RoomHall> findAllRoomHall(){
-        return roomHallRepo.findAll();
-    }
 }

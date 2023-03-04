@@ -1,73 +1,96 @@
 package ru.wolves.bookingsite.controllers;
 
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.Cookie;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.RoomHall;
-import ru.wolves.bookingsite.services.BookingService;
-import ru.wolves.bookingsite.services.PersonService;
-import ru.wolves.bookingsite.services.RoomHallService;
+import ru.wolves.bookingsite.servicesImpl.BookingServiceImpl;
+import ru.wolves.bookingsite.servicesImpl.PersonServiceImpl;
+import ru.wolves.bookingsite.servicesImpl.RoomHallServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
 import ru.wolves.bookingsite.util.PersonValidator;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 @Controller
 public class FormController {
-    private final PersonService personService;
-    private final RoomHallService roomHallService;
-    private final BookingService bookingService;
+    private final PersonServiceImpl personServiceImpl;
+    private final RoomHallServiceImpl roomHallServiceImpl;
+    private final BookingServiceImpl bookingServiceImpl;
     private final BookingValidator bookingValidator;
     private final PersonValidator personValidator;
-    private Booking booking;
 
     @Autowired
-    public FormController(PersonService personService, RoomHallService roomHallService, BookingService bookingService, BookingValidator bookingValidator, PersonValidator personValidator) {
-        this.personService = personService;
-        this.roomHallService = roomHallService;
-        this.bookingService = bookingService;
+    public FormController(PersonServiceImpl personServiceImpl, RoomHallServiceImpl roomHallServiceImpl, BookingServiceImpl bookingServiceImpl, BookingValidator bookingValidator, PersonValidator personValidator) {
+        this.personServiceImpl = personServiceImpl;
+        this.roomHallServiceImpl = roomHallServiceImpl;
+        this.bookingServiceImpl = bookingServiceImpl;
         this.bookingValidator = bookingValidator;
         this.personValidator = personValidator;
     }
     @GetMapping("/")
     public String placeForm(@ModelAttribute("booking") Booking booking,
                             @ModelAttribute("roomHall") RoomHall roomHall, Model model){
-        model.addAttribute("halls",roomHallService.findAllRoomHall());
-        this.booking = null;
+        model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
+        model.addAttribute("current_date",LocalDate.now());
+
         return "formControl/place_form";
     }
     @PostMapping("/")
     public String savePlace(@Valid @ModelAttribute("booking") Booking booking,
-                            BindingResult bindingResult, Model model){
+                            BindingResult bindingResult, Model model, HttpServletRequest request){
 
         bookingValidator.validate(booking,bindingResult);
         if(bindingResult.hasErrors()) {
-            model.addAttribute("halls", roomHallService.findAllRoomHall());
+            model.addAttribute("current_date",LocalDate.now());
+            model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
             return "formControl/place_form";
         }
-        this.booking = booking;
+        HttpSession session = request.getSession();
+        session.setAttribute("booking",booking);
         return "redirect:/booking";
 
     }
 
     @GetMapping("/booking")
-    public String personForm(@ModelAttribute("person") Person person, Model model){
+    public String personForm(@ModelAttribute("person") Person person, Model model
+            , HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(session.isNew()) {
+            session.invalidate();
+            return "redirect:/";
+        }
+        Booking booking = (Booking) session.getAttribute("booking");
         if(booking == null) return "redirect:/";
+
         model.addAttribute("booking",booking);
         return "formControl/person_form";
     }
 
     @PostMapping("/booking")
     public String addBooking(@Valid @ModelAttribute("person") Person person,
-                             BindingResult bindingResult){
+                             BindingResult bindingResult, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Booking booking = (Booking) session.getAttribute("booking");
         personValidator.validate(person,bindingResult);
         if(bindingResult.hasErrors()) {
             return "formControl/person_form";
         }
-        personService.savePersonWithBooking(person, booking);
+        bookingServiceImpl.savePersonWithBooking(person, booking);
         return "booking/success";
     }
 }
