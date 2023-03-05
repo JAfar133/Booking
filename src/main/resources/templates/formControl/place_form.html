@@ -3,17 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Бронирование</title>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css" />
-  <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <!-- Подключаем локаль библиотеки moment -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ru.js"></script>
-  <!-- Подключаем библиотеку moment -->
-  <script data-require="MomentJS@2.10.0" data-semver="2.10.0" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-  <!-- Подключаем js-файл Bootstrap -->
-  <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Подключаем js-файл библиотеки DateTimePicker -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
   <link rel="stylesheet" th:href="@{styles/css/header.css}">
   <link rel="stylesheet" th:href="@{styles/css/main.css}">
@@ -37,41 +28,45 @@
           <div class="alert alert-danger" th:if="${#fields.hasErrors('place')}" th:errors="*{place}"/>
         </div>
         <div class="form-group mt-3" >
-            <label for="dateStart">Выберите дату</label>
+            <label for="date">Выберите дату</label>
             <input class="form-control"
-                   type="date" id="dateStart" required name="date" xml:lang="ru"
-                   th:field="*{date}"
-                   th:value="${current_date}"
-                   th:min="${current_date}"/>
+                   type="date" id="date" required name="date"
+                   th:field="*{date}"/>
             <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"/>
         </div>
         <div class="form-row mb-4">
           <div class="col">
             <label for="timeStart">Начало</label>
             <input class="form-control"
-                   th:field="*{timeStart}" type="time" id="timeStart" name="time"
+                   th:field="*{timeStart}"
+                   type="time" id="timeStart" name="timeStart"
                    step="600"
                    min="08:30"
-                   max="19:30"
+                   max="22:00"
                    required/>
             <div class="alert alert-danger"th:if="${#fields.hasErrors('timeStart')}" th:errors="*{timeStart}"/>
           </div>
           <div class="col">
             <label for="timeEnd">Конец</label>
             <input class="form-control"
-                   th:field="*{timeEnd}" type="time" id="timeEnd" name="time"
+                   th:field="*{timeEnd}" type="time" id="timeEnd" name="timeStart"
                    step="600"
-                   min="09:30"
-                   max="20:30"
+                   min="08:30"
+                   max="22:00"
                    required/>
             <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"/>
           </div>
         </div>
-        <div style="display: flex; width: 100%">
+        <div style="display: flex; position: absolute; width: 100%">
           <input class="btn btn-info" type="submit" value="Продолжить"/>
         </div>
       </form>
     </div>
   </div>
+
+
+  <script type="text/javascript" src="js/dateFormat.js"></script>
+
+  <script type="text/javascript" src="js/date.js"></script>
 </body>
 </html>

@@ -28,24 +28,40 @@
                 <div class="container" style="width: 90%">
 
                     <div class="form-group">
-                        <input placeholder="Фамилия" class="form-control" th:field="*{lastName}" type="text" name="last_name" id="last_name">
+                        <input placeholder="Фамилия" class="form-control"
+                               th:field="*{lastName}"
+                               type="text"
+                               name="last_name"
+                               id="last_name">
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
                     </div>
 
                     <div class="form-row">
                         <div class="col">
-                            <input placeholder="Имя" class="form-control" th:field="*{firstName}" type="text" name="first_name" id="first_name">
+                            <input placeholder="Имя" class="form-control"
+                                   th:field="*{firstName}"
+                                   type="text"
+                                   name="first_name"
+                                   id="first_name">
                             <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
                         </div>
 
                         <div class="col">
-                            <input placeholder="Отчество" class="form-control" th:field="*{middleName}" type="text" name="middle_name" id="middle_name">
+                            <input placeholder="Отчество" class="form-control"
+                                   th:field="*{middleName}"
+                                   type="text"
+                                   name="middle_name"
+                                   id="middle_name">
                             <div class="alert alert-danger" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"/>
                         </div>
                     </div>
 
                     <div class="form-group mt-3">
-                        <input placeholder="Номер телефона"class="form-control" th:field="*{phoneNumber}" type="text" name="phone" id="phone">
+                        <input placeholder="Номер телефона"class="form-control"
+                               th:field="*{phoneNumber}"
+                               type="text"
+                               name="phone"
+                               id="phone">
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"/>
                     </div>
 
@@ -57,9 +73,13 @@
                         </select>
                     </div>
 
-                    <div class="form-row student mb-4">
+                    <div class="form-row student mb-4" th:style="${person.post=='Работник' ? 'display:none' : 'display:flex'}">
                         <div class="col">
-                            <input placeholder="Институт"class="form-control" th:field="*{institute}" type="text" name="institute" id="institute">
+                            <input placeholder="Институт"class="form-control"
+                                   th:field="*{institute}"
+                                   type="text"
+                                   name="institute"
+                                   id="institute">
                             <div class="alert alert-danger" th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"/>
                         </div>
 
@@ -74,8 +94,12 @@
                         </div>
                     </div>
 
-                    <div class=" form-group worker mb-4" style="display: none; width: 100%">
-                        <input placeholder="Какой структуры"class="form-control" th:field="*{structure}" type="text" name="structure" id="structure">
+                    <div class=" form-group worker mb-4" style="display:none; width: 100%" th:style="${person.post==null || person.post=='Студент' ? 'display:none' : 'display:block'}">
+                        <input placeholder="Какой структуры"class="form-control"
+                               th:field="*{structure}"
+                               type="text"
+                               name="structure"
+                               id="structure">
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('structure')}" th:errors="*{structure}"/>
                     </div>
 
@@ -98,7 +122,7 @@
             <script src="https://api-maps.yandex.ru/2.0-stable/?apikey=58a2c036-d3dc-4114-9bd3-1f7483845947&load=package.standard&lang=ru-RU" type="text/javascript"></script>
         </div>
     </div>
-    <script src="js/selectScript.js"></script>
+    <script type="text/javascript" src="js/selectScript.js"></script>
     <script th:inline="javascript">
         ymaps.ready(init);
         var myMap,

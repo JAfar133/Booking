@@ -27,8 +27,8 @@ public class BookingValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Booking booking = (Booking) target;
 
-        if(booking.getDate().getYear() < new Date().getYear()){
-            errors.rejectValue("date","","");
+        if(booking.getTimeStart().getTime() - booking.getTimeEnd().getTime() >= 0){
+            errors.rejectValue("timeEnd","","Время окончания не может быть меньше или совпадать с началом");
         }
         bookingServiceImpl.findAllByRoomHall(booking.getPlace()).forEach(booking1 -> {
             if (booking1.getDate() != null && booking1.getDate().equals(booking.getDate())) {

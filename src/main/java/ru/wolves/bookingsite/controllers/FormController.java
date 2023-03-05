@@ -46,7 +46,6 @@ public class FormController {
     public String placeForm(@ModelAttribute("booking") Booking booking,
                             @ModelAttribute("roomHall") RoomHall roomHall, Model model){
         model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
-        model.addAttribute("current_date",LocalDate.now());
 
         return "formControl/place_form";
     }
@@ -56,7 +55,6 @@ public class FormController {
 
         bookingValidator.validate(booking,bindingResult);
         if(bindingResult.hasErrors()) {
-            model.addAttribute("current_date",LocalDate.now());
             model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
             return "formControl/place_form";
         }
@@ -74,6 +72,10 @@ public class FormController {
             session.invalidate();
             return "redirect:/";
         }
+        Person personFromSession = (Person) session.getAttribute("person");
+        if(personFromSession!=null){
+            model.addAttribute("person",personFromSession);
+        }
         Booking booking = (Booking) session.getAttribute("booking");
         if(booking == null) return "redirect:/";
 
@@ -87,10 +89,12 @@ public class FormController {
         HttpSession session = request.getSession();
         Booking booking = (Booking) session.getAttribute("booking");
         personValidator.validate(person,bindingResult);
+        bookingValidator.validate(booking,bindingResult);
         if(bindingResult.hasErrors()) {
             return "formControl/person_form";
         }
         bookingServiceImpl.savePersonWithBooking(person, booking);
+        session.setAttribute("person",person);
         return "booking/success";
     }
 }
