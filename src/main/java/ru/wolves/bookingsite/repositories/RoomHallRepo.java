@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface RoomHallRepo extends JpaRepository<RoomHall,Integer> {
     Optional<RoomHall> findByName(String name);
+    Optional<RoomHall> findByEngName(String engName);
 }

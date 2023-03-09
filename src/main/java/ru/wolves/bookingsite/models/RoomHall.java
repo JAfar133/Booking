@@ -31,12 +31,23 @@ public class RoomHall {
     @OneToMany(mappedBy = "place")
     private List<Booking> bookings;
 
+    @Column(name = "eng_name")
+    private String engName;
+
     public RoomHall(String name, String address) {
         this.name = name;
         this.address = address;
     }
 
     public RoomHall() {
+    }
+
+    public String getEngName() {
+        return engName;
+    }
+
+    public void setEngName(String engName) {
+        this.engName = engName;
     }
 
     public int getId() {

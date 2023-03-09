@@ -15,7 +15,7 @@ select.onchange = function() {
     };
     if( selectedId == 'student' ) {
         worker.style = 'display: none'
-        student.style = 'display: flex'
+        student.style = 'display: block'
         console.log("1")
     };
 };
