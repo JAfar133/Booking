@@ -20,7 +20,7 @@ public class Booking {
 
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
     @Column(name = "time_start")
@@ -43,6 +43,11 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "roomhall_id", referencedColumnName = "id")
     private RoomHall place;
+
+    @Column(name = "comment")
+    private String comment;
+
+
 
     public Booking(Date bookedAt, Person customer) {
         this.bookedAt = bookedAt;
@@ -108,6 +113,13 @@ public class Booking {
         this.customer = customer;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

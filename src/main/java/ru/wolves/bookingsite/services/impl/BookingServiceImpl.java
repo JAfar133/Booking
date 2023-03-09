@@ -1,4 +1,4 @@
-package ru.wolves.bookingsite.servicesImpl;
+package ru.wolves.bookingsite.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;

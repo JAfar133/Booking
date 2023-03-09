@@ -1,13 +1,12 @@
 package ru.wolves.bookingsite.util;
 
+import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.wolves.bookingsite.models.Booking;
-import ru.wolves.bookingsite.servicesImpl.BookingServiceImpl;
-
-import java.util.Date;
+import ru.wolves.bookingsite.services.impl.BookingServiceImpl;
 
 @Component
 public class BookingValidator implements Validator {
@@ -26,23 +25,32 @@ public class BookingValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Booking booking = (Booking) target;
-
-        if(booking.getDate().getYear() < new Date().getYear()){
-            errors.rejectValue("date","","");
+        if(booking.getTimeStart().getTime() - booking.getTimeEnd().getTime() >= 0){
+            reject(errors,"timeEnd","Время окончания не может быть меньше или совпадать с началом");
         }
+        placeIsNotFree(booking,errors);
+
+    }
+
+    private void placeIsNotFree(Booking booking, Errors errors){
         bookingServiceImpl.findAllByRoomHall(booking.getPlace()).forEach(booking1 -> {
             if (booking1.getDate() != null && booking1.getDate().equals(booking.getDate())) {
                 if(booking1.getTimeStart().getTime() <= booking.getTimeStart().getTime()) {
                     if (booking1.getTimeEnd().getTime() > booking.getTimeStart().getTime()) {
-                        errors.rejectValue("place","",
-                                "Помещение занято в это время. Выберите другое помещение или измените время");
+                        reject(errors,"place","Помещение занято в это время. Выберите другое помещение или измените время");
                     }
                 } else {
                     if(booking.getTimeEnd().getTime() > booking1.getTimeStart().getTime())
-                        errors.rejectValue("place","",
-                                "Помещение занято в это время. Выберите другое помещение или измените время");
+                        reject(errors,"place","Помещение занято в это время. Выберите другое помещение или измените время");
                 }
             }
         });
+    }
+    private void reject(Errors errors, String field, String message){
+        try {
+            errors.rejectValue(field,"",message);
+        }catch (NotReadablePropertyException e){
+            errors.reject("101","unexcepted error");
+        }
     }
 }

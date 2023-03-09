@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sona Template">
+    <meta name="keywords" content="Sona, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sona | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/styles/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/flaticon.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/nice-select.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/jquery-ui.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/styles/css/style.css}" type="text/css">
+</head>
+
+<body>
+<div th:insert="~{blocks/header :: header}"></div>
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Наши помещения</h2>
+                        <div class="bt-option">
+                            <a href="./index.html">На главную</a>
+                            <span>Домашняя страница</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Room Details Section Begin -->
+    <section class="room-details-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="room-details-item">
+                        <img th:src="@{/img/room/room-details.jpg}" alt="">
+                        <div class="rd-text">
+                            <div class="rd-title">
+                                <h3 th:text="${room.name + ', '+ room.address}"></h3>
+                                <div class="rdt-right">
+                                    <a href="#">Забронировать</a>
+                                </div>
+                            </div>
+                            <h2>159$<span>/Pernight</span></h2>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="r-o">Size:</td>
+                                        <td>30 ft</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Capacity:</td>
+                                        <td>Max persion 5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Bed:</td>
+                                        <td>King Beds</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Services:</td>
+                                        <td>Wifi, Television, Bathroom,...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="f-para">Motorhome or Trailer that is the question for you. Here are some of the
+                                advantages and disadvantages of both, so you will be confident when purchasing an RV.
+                                When comparing Rvs, a motorhome or a travel trailer, should you buy a motorhome or fifth
+                                wheeler? The advantages and disadvantages of both are studied so that you can make your
+                                choice wisely when purchasing an RV. Possessing a motorhome or fifth wheel is an
+                                achievement of a lifetime. It can be similar to sojourning with your residence as you
+                                search the various sites of our great land, America.</p>
+                            <p>The two commonly known recreational vehicle classes are the motorized and towable.
+                                Towable rvs are the travel trailers and the fifth wheel. The rv travel trailer or fifth
+                                wheel has the attraction of getting towed by a pickup or a car, thus giving the
+                                adaptability of possessing transportation for you when you are parked at your campsite.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container" id="map" style="width: 100%; height: 400px">
+                        <h5 style="color:#fff" >Местоположение</h5>
+                        <span style="color:#fff" th:text="${room.address}"></span>
+                        <br>
+                    </div>
+                    <div class="rd-reviews">
+                        <h4>Reviews</h4>
+                        <div class="review-item">
+                            <div class="ri-pic">
+                                <img th:src="@{/img/room/avatar/avatar-1.jpg}" alt="">
+                            </div>
+                            <div class="ri-text">
+                                <span>27 Aug 2019</span>
+                                <h5>Brandon Kelley</h5>
+                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                    adipisci velit, sed quia non numquam eius modi tempora. incidunt ut labore et dolore
+                                    magnam.</p>
+                            </div>
+                        </div>
+                        <div class="review-item">
+                            <div class="ri-pic">
+                                <img th:src="@{/img/room/avatar/avatar-2.jpg}" alt="">
+                            </div>
+                            <div class="ri-text">
+                                <span>27 Aug 2019</span>
+                                <h5>Brandon Kelley</h5>
+                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                    adipisci velit, sed quia non numquam eius modi tempora. incidunt ut labore et dolore
+                                    magnam.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-add">
+                        <h4>Add Review</h4>
+                        <form action="#" class="ra-form">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="Name*">
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="Email*">
+                                </div>
+                                <div class="col-lg-12">
+                                    <textarea placeholder="Your Review"></textarea>
+                                    <button type="submit">Submit Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="booking-form">
+                        <h3>Бронирование</h3>
+                        <form th:action="@{/}" th:object="${booking}" method="post" >
+                            <div class="check-date">
+                                <label for="date-in">Дата:</label>
+                                <input type="text" class="date-input" id="date-in" required="required" readonly>
+                                <input th:field="*{date}" type="text"id="alt-date" required="required" hidden="hidden">
+                                <i class="icon_calendar"></i>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}">Введи корректную дату</div>
+                            </div>
+                            <div class="check-date">
+                                <label for="time-start">Начало:</label>
+                                <input th:field="*{timeStart}" type="text" class="date-input" id="time-start" required="required" readonly>
+                                <i class="icon_calendar"></i>
+                            </div>
+                            <div class="check-date">
+                                <label for="time-out">Конец:</label>
+                                <input th:field="*{timeEnd}" type="text" class="date-input" id="time-out" required="required" readonly>
+                                <i class="icon_calendar"></i>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"></div>
+
+                            </div>
+                            <div class="check-date">
+                                <label for="room">Помещение:</label>
+                                <input th:value="${room.name+' - '+room.address}" type="text" id="room" required="required" readonly>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('place') && !#fields.hasErrors('timeEnd')}">К сожалению данное помещение занято в это время
+                                    <!-- /room/{room_id}?free_dates=true -->
+                                    <a href="#">посмотреть свободные даты </a>
+                                    или
+                                    <!-- /rooms?free_rooms=true -->
+                                    <a th:href="@{/rooms?free_rooms=true}"> посмотреть свободные помещения на это время</a>
+                                </div>
+                            </div>
+                            <!-- /person_details -->
+                            <button type="submit">Продолжить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Room Details Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-text">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="ft-about">
+                            <div class="logo">
+                                <a href="#">
+                                    <img th:src="@{/img/footer-logo.png}" alt="">
+                                </a>
+                            </div>
+                            <p>We inspire and reach millions of travelers<br /> across 90 local websites</p>
+                            <div class="fa-social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-tripadvisor"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="ft-contact">
+                            <h6>Contact Us</h6>
+                            <ul>
+                                <li>(12) 345 67890</li>
+                                <li>info.colorlib@gmail.com</li>
+                                <li>856 Cordia Extension Apt. 356, Lake, United State</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="ft-newslatter">
+                            <h6>New latest</h6>
+                            <p>Get the latest updates and offers.</p>
+                            <form action="#" class="fn-form">
+                                <input type="text" placeholder="Email">
+                                <button type="submit"><i class="fa fa-send"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-option">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <ul>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Environmental Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="co-text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch"><i class="icon_close"></i></div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <script th:src="@{/js/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/jquery-ui-timepicker-addon.js}"></script>
+    <script th:src="@{/js/jquery-ui-timepicker-addon.min.js}"></script>
+
+    <script src="https://api-maps.yandex.ru/2.0-stable/?apikey=58a2c036-d3dc-4114-9bd3-1f7483845947&load=package.standard&lang=ru-RU" type="text/javascript"></script>
+
+    <script th:inline="javascript">
+        ymaps.ready(init);
+        var myMap,
+            myPlacemark;
+        function init(){
+            let lat = /*[[${room.lat}]]*/;
+            let lon = /*[[${room.lon}]]*/;
+            //44.597365, 33.519790
+            console.log(lat+" "+lon)
+            myMap = new ymaps.Map ("map", {
+                center: [lon, lat],
+                zoom: 17,
+                behaviors: ['ruler', 'scrollZoom'],
+                geoObjectDraggable: true
+            });
+            myPlacemark = new ymaps.Placemark([lon, lat], {
+            },{
+                // Опции.
+                // Необходимо указать данный тип макета.
+                iconLayout: 'default#image',
+                // Своё изображение иконки метки.
+                iconImageHref: '/icon/wing.png',
+                iconImageSize: [60, 70],
+            });
+
+            myMap.geoObjects.add(myPlacemark);
+            myMap.controls.add(new ymaps.control.MiniMap({type:'yandex#hybrid'},{zoomOffset: 5}));
+            myMap.behaviors.enable(['drag', 'rightMouseButtonMagnifier'])
+        }
+    </script>
+</body>
+
+</html>
