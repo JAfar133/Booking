@@ -97,4 +97,9 @@ public class RoomHall {
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
+
+    @Override
+    public String toString() {
+        return name + " - " + address;
+    }
 }
