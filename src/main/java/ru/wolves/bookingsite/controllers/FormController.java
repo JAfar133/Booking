@@ -44,7 +44,7 @@ public class FormController {
         return "index";
     }
     @PostMapping("/")
-    public String savePlace(@Valid @ModelAttribute("booking") Booking booking,
+    public String booking(@Valid @ModelAttribute("booking") Booking booking,
                             BindingResult bindingResult, Model model, HttpServletRequest request){
 
         bookingValidator.validate(booking,bindingResult);
