@@ -16,7 +16,7 @@ public class Booking {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
@@ -47,6 +47,9 @@ public class Booking {
     @Column(name = "comment")
     private String comment;
 
+    @Column(name = "confirmed")
+    private boolean confirmed;
+
 
 
     public Booking(Date bookedAt, Person customer) {
@@ -57,12 +60,20 @@ public class Booking {
     public Booking() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
     }
 
     public LocalDate getDate() {

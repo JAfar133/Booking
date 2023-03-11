@@ -561,7 +561,9 @@ ul, ol {
 	font-weight: 500;
 	padding-left: 20px;
 }
-
+.card-footer input{
+	margin-right: 10px !important;
+}
 .booking-form form .check-date i {
 	color: #216DDF;
 	position: absolute;

@@ -7,7 +7,8 @@ import ru.wolves.bookingsite.models.RoomHall;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface BookingRepo extends JpaRepository<Booking,Integer> {
+public interface BookingRepo extends JpaRepository<Booking,Long> {
     List<Booking> findAllByPlace(RoomHall roomHall);
     List<Booking> findAllByDate(LocalDate date);
+    List<Booking> findAllByConfirmedIsFalse();
 }

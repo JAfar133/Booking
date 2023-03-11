@@ -38,8 +38,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepo.findAll();
     }
 
-    @Cacheable(cacheNames = "bookingCache", key = "#id")
-    public Booking findBooking(int id){
+    public Booking findBooking(Long id){
         Optional<Booking> booking = bookingRepo.findById(id);
         if(booking.isPresent())
             return booking.get();
@@ -48,15 +47,31 @@ public class BookingServiceImpl implements BookingService {
 
     @Transactional
     public void savePersonWithBooking(Person person, Booking booking){
-        if(person.getPost().equals("Работник")) person.setCourse(-1);
+        if(person.getPost().equals("Работник"))
+            person.setCourse(-1);
+        Optional<Person> comparePerson = personRepo.findByPhoneNumber(person.getPhoneNumber());
+        if(comparePerson.isPresent() && comparePerson.get().equals(person))
+            person = comparePerson.get();
         booking.setBookedAt(new Date());
         person.setBookingList(new ArrayList<>());
-        bookingRepo.save(booking);
+        person.setLastNameAndInitials(getLastNameInitials(person));
+        personRepo.save(person);
         person.getBookingList().add(booking);
         booking.setCustomer(person);
-        personRepo.save(person);
+        bookingRepo.save(booking);
     }
 
+    private String getLastNameInitials(Person person){
+        var lastName = person.getLastName();
+        var firstName = person.getFirstName();
+        var middleName = person.getMiddleName();
+        StringBuffer fio = new StringBuffer(lastName);
+        fio.append(" ")
+                .append(firstName.charAt(0))
+                .append(".")
+                .append(middleName.charAt(0)).append(".");
+        return fio.toString();
+    }
     @Transactional
     public void saveBooking(Booking booking){
             bookingRepo.save(booking);
@@ -70,15 +85,20 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames = "bookingCache", key="#id")
-    public void deleteBooking(int id) {
+    public void deleteBooking(Long id) {
+        Person person = findBooking(id).getCustomer();
         bookingRepo.delete(findBooking(id));
+        personRepo.delete(person);
     }
 
     @Override
     @Transactional
-    @CachePut(cacheNames = "bookingCache",key = "#booking.id")
     public Booking updateBooking(Booking booking) {
         return bookingRepo.save(booking);
+    }
+
+    @Override
+    public List<Booking> findAllUnConfirmedBooking() {
+        return bookingRepo.findAllByConfirmedIsFalse();
     }
 }

@@ -13,7 +13,7 @@ public class Person {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotEmpty(message = "Поле не может быть пустным")
     @Column(name = "first_name")
@@ -40,6 +40,9 @@ public class Person {
     private int course;
     @Column(name = "structure")
     private String structure;
+
+    @Column(name = "last_name_and_initials")
+    private String lastNameAndInitials;
 
     @OneToMany(mappedBy = "customer")
     private List<Booking> bookingList;
@@ -71,14 +74,22 @@ public class Person {
         this.bookingList = bookingList;
     }
 
+    public String getLastNameAndInitials() {
+        return lastNameAndInitials;
+    }
+
+    public void setLastNameAndInitials(String lastNameAndInitials) {
+        this.lastNameAndInitials = lastNameAndInitials;
+    }
+
     public Person() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -151,7 +162,7 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(middleName, person.middleName) && Objects.equals(phoneNumber, person.phoneNumber);
+        return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(middleName, person.middleName) && Objects.equals(phoneNumber, person.phoneNumber);
     }
 
     @Override

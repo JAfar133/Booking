@@ -25,7 +25,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Cacheable(cacheNames = "person", key="#id")
-    public Person findPerson(int id){
+    public Person findPerson(Long id){
         Optional<Person> person = personRepo.findById(id);
         if(person.isPresent())
             return person.get();
@@ -52,7 +52,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void deletePerson(int id) {
+    public void deletePerson(Long id) {
         personRepo.delete(findPerson(id));
     }
 }

@@ -29,7 +29,7 @@ public class RoomHallServiceImpl implements RoomHallService {
 
     @Override
     @Cacheable(cacheNames = "booking", key = "#id")
-    public RoomHall findRoom(int id) {
+    public RoomHall findRoom(Long id) {
         Optional<RoomHall> roomHall = roomHallRepo.findById(id);
         if(roomHall.isPresent())
             return roomHall.get();
@@ -63,7 +63,7 @@ public class RoomHallServiceImpl implements RoomHallService {
 
     @Override
     @Transactional
-    public void deleteRoomHall(int id) {
+    public void deleteRoomHall(Long id) {
         Optional<RoomHall> roomHall = roomHallRepo.findById(id);
         if(roomHall.isPresent())
             roomHallRepo.delete(roomHall.get());

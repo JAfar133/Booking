@@ -20,27 +20,22 @@ import ru.wolves.bookingsite.util.PersonValidator;
 
 @Controller
 public class FormController {
-    private final PersonServiceImpl personServiceImpl;
     private final RoomHallServiceImpl roomHallServiceImpl;
     private final BookingServiceImpl bookingServiceImpl;
     private final BookingValidator bookingValidator;
     private final PersonValidator personValidator;
 
     @Autowired
-    public FormController(PersonServiceImpl personServiceImpl, RoomHallServiceImpl roomHallServiceImpl,
-                          BookingServiceImpl bookingServiceImpl, BookingValidator bookingValidator,
-                          PersonValidator personValidator) {
-        this.personServiceImpl = personServiceImpl;
+    public FormController(RoomHallServiceImpl roomHallServiceImpl, BookingServiceImpl bookingServiceImpl,
+                          BookingValidator bookingValidator, PersonValidator personValidator) {
         this.roomHallServiceImpl = roomHallServiceImpl;
         this.bookingServiceImpl = bookingServiceImpl;
         this.bookingValidator = bookingValidator;
         this.personValidator = personValidator;
     }
     @GetMapping("/")
-    public String placeForm(@ModelAttribute("booking") Booking booking,
-                            @ModelAttribute("roomHall") RoomHall roomHall, Model model){
+    public String placeForm(@ModelAttribute("booking") Booking booking, Model model){
         model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
-
         return "index";
     }
     @PostMapping("/")
