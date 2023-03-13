@@ -49,9 +49,6 @@ public class BookingServiceImpl implements BookingService {
     public void savePersonWithBooking(Person person, Booking booking){
         if(person.getPost().equals("Работник"))
             person.setCourse(-1);
-        Optional<Person> comparePerson = personRepo.findByPhoneNumber(person.getPhoneNumber());
-        if(comparePerson.isPresent() && comparePerson.get().equals(person))
-            person = comparePerson.get();
         booking.setBookedAt(new Date());
         person.setBookingList(new ArrayList<>());
         person.setLastNameAndInitials(getLastNameInitials(person));
@@ -100,5 +97,9 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> findAllUnConfirmedBooking() {
         return bookingRepo.findAllByConfirmedIsFalse();
+    }
+    @Override
+    public List<Booking> findAllConfirmedBooking() {
+        return bookingRepo.findAllByConfirmedIsTrue();
     }
 }

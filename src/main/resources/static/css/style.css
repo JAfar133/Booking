@@ -607,7 +607,7 @@ ul, ol {
 	margin-top: 0;
 	width: 100%;
 }
-.booking-form form button {
+.booking-form form button[type="submit"] {
 	display: block;
 	font-size: 14px;
 	text-transform: uppercase;
@@ -618,6 +618,95 @@ ul, ol {
 	background: transparent;
 	width: 100%;
 	height: 46px;
+	margin-top: 30px;
+}
+
+.modal-footer {
+	display: flex;
+	justify-content: end;
+}
+
+.modal-content form .check-date label {
+	font-size: 14px;
+	color: #707079;
+	display: block;
+	margin-bottom: 10px;
+}
+.modal-content form .check-date input {
+	width: 100%;
+	height: 50px;
+	border: 1px solid #ebebeb;
+	border-radius: 2px;
+	font-size: 16px;
+	color: #19191a;
+	font-weight: 500;
+	padding-left: 20px;
+}
+.modal-content form .check-date textarea {
+	width: 100%;
+	height: 100px;
+	border: 1px solid #ebebeb;
+	border-radius: 2px;
+	font-size: 16px;
+	color: #19191a;
+	font-weight: 500;
+	padding-left: 20px;
+}
+
+.modal-content form .check-date i {
+	color: #216DDF;
+	position: absolute;
+	right: 18px;
+	bottom: 17px;
+}
+.modal-content form .select-option {
+	margin-bottom: 15px;
+}
+.modal-content form .select-option label {
+	font-size: 14px;
+	color: #707079;
+	display: block;
+	margin-bottom: 10px;
+}
+.modal-content form .select-option .nice-select {
+	border-radius: 2px;
+	border: 1px solid #ebebeb;
+	height: 50px;
+	line-height: 50px;
+	outline: none;
+	padding-left: 20px;
+	width: 100%;
+	float: none;
+}
+.modal-content form .select-option .nice-select:after {
+	border-bottom: 2px solid #216DDF;
+	border-right: 2px solid #216DDF;
+	height: 10px;
+	margin-top: 0;
+	right: 20px;
+	width: 10px;
+	top: 36%;
+}
+.modal-content form .select-option .nice-select span {
+	font-size: 16px;
+	color: #19191a;
+	font-weight: 500;
+}
+.modal-content .select-option .nice-select .list {
+	margin-top: 0;
+	width: 100%;
+}
+.modal-footer button {
+	display: block;
+	font-size: 14px;
+	text-transform: uppercase;
+	border: 1px solid #216DDF;
+	border-radius: 2px;
+	color: #216DDF;
+	font-weight: 500;
+	background: transparent;
+	height: 46px;
+	width: 30%;
 	margin-top: 30px;
 }
 .hero-slider {
@@ -2001,6 +2090,9 @@ ul, ol {
 	.top-nav {
 		display: none;
 	}
+	.booking-form {
+		width:auto;
+	}
 	.menu-item .nav-menu {
 		display: none;
 	}
@@ -2012,7 +2104,7 @@ ul, ol {
 		z-index: 98;
 		height: 100%;
 		width: 100%;
-		visibility: hidden;
+		visibility: visible;
 		-webkit-transition: 0.3s;
 		-o-transition: 0.3s;
 		transition: 0.3s;
@@ -2047,7 +2139,7 @@ ul, ol {
 		overflow-y: auto;
 		height: 100%;
 		opacity: 0;
-		visibility: hidden;
+		visibility: visible;
 		-webkit-transition: all 0.5s;
 		-o-transition: all 0.5s;
 		transition: all 0.5s;

@@ -17,7 +17,7 @@
     </div>
     <div class="header-configure-area">
         <div class="language-option">
-            <img th:src="@{/img/flag.jpg}" alt="">
+            <img src="img/flag.jpg" alt="">
             <span>EN <i class="fa fa-angle-down"></i></span>
             <div class="flag-dropdown">
                 <ul>
@@ -30,12 +30,15 @@
     </div>
     <nav class="mainmenu mobile-menu">
         <ul>
-            <li class="active"><a th:href="@{/}">Home</a></li>
-            <li><a th:href="@{/rooms}">Rooms</a></li>
-            <li><a th:href="">About Us</a></li>
-            <li><a th:href="">Pages</a>
+            <li class="active"><a href="./index.html">Home</a></li>
+            <li><a href="./rooms.html">Rooms</a></li>
+            <li><a href="./about-us.html">About Us</a></li>
+            <li><a href="./pages.html">Pages</a>
                 <ul class="dropdown">
                     <li><a href="./room-details.html">Room Details</a></li>
+                    <li><a href="#">Deluxe Room</a></li>
+                    <li><a href="#">Family Room</a></li>
+                    <li><a href="#">Premium Room</a></li>
                 </ul>
             </li>
             <li><a href="./blog.html">News</a></li>
@@ -70,7 +73,7 @@
                 <div class="col-lg-6">
                     <div class="tn-right">
                         <div class="top-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-instagram"></i></a>
                         </div>
@@ -95,10 +98,10 @@
                         <nav class="mainmenu">
                             <ul>
                                 <li class="active"><a th:href="@{/}">Домашняя страница</a></li>
-                                <li><a th:href="@{/rooms}">Помещения</a></li>
-                                <li><a href="./about-us.html">О нас</a></li>
-                                <li><a href="./blog.html">Новости</a></li>
-                                <li><a href="./contact.html">Контакты</a></li>
+                                <li class="li"><a th:href="@{/rooms}">Помещения</a></li>
+                                <li class="li"><a href="about-us.html">О нас</a></li>
+                                <li class="li"><a href="blog.html">Новости</a></li>
+                                <li class="li"><a href="contact.html">Контакты</a></li>
                             </ul>
                         </nav>
                         <div class="nav-right search-switch">
@@ -109,5 +112,16 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(".li").hover(
+            function () {
+                //toggleClass() switches the active class
+                $(this).toggleClass("active");
+            },
+            function () {
+                $(this).addClass("li");
+            }
+        );
+    </script>
 </header>
 <!-- Header End -->

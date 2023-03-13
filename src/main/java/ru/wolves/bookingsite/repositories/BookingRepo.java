@@ -11,4 +11,5 @@ public interface BookingRepo extends JpaRepository<Booking,Long> {
     List<Booking> findAllByPlace(RoomHall roomHall);
     List<Booking> findAllByDate(LocalDate date);
     List<Booking> findAllByConfirmedIsFalse();
+    List<Booking> findAllByConfirmedIsTrue();
 }

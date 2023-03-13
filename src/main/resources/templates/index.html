@@ -20,6 +20,9 @@
 <body>
     <div th:insert="~{blocks/header :: header}"></div>
 
+    <!-- Modal -->
+    <div th:insert="~{blocks/modal :: modal}"></div>
+
     <!-- Hero Section Begin -->
     <section class="hero-section">
         <div class="container">
@@ -36,22 +39,21 @@
                         <form th:action="@{/}" th:object="${booking}" th:method="post" >
                             <div class="check-date">
                                 <label for="date-in">Дата:</label>
-                                <input type="text" class="date-input" id="date-in" required="required" readonly>
+                                <input type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
                                 <input th:field="*{date}" type="text"id="alt-date" required="required" hidden="hidden">
                                 <i class="icon_calendar"></i>
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}">Введи корректную дату</div>
                             </div>
                             <div class="check-date">
                                 <label for="time-start">Начало:</label>
-                                <input th:field="*{timeStart}" type="text" class="date-input" id="time-start" required="required" readonly>
+                                <input th:field="*{timeStart}" type="text" class="date-input" id="time-start" required="required">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="check-date">
-                                <label for="time-out">Конец:</label>
-                                <input th:field="*{timeEnd}" type="text" class="date-input" id="time-out" required="required" readonly>
+                                <label for="time-end">Конец:</label>
+                                <input th:field="*{timeEnd}" type="text" class="date-input" id="time-end" required="required">
                                 <i class="icon_calendar"></i>
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"></div>
-
                             </div>
                             <div class="select-option">
                                 <label for="room">Помещение:</label>
@@ -68,7 +70,7 @@
 
                             </div>
                             <!-- /person_details -->
-                            <button type="submit">Продолжить</button>
+                            <button type="submit" class="btn btn-primary" >Продолжить</button>
                         </form>
                     </div>
                 </div>
@@ -81,6 +83,8 @@
         </div>
     </section>
     <!-- Hero Section End -->
+
+
 
     <!-- About Us Section Begin -->
     <section class="aboutus-section spad">
@@ -233,8 +237,8 @@
     <div th:insert="~{blocks/footer :: footer}"></div>
 
     <!-- Js Plugins -->
+    <script src="js/selectScript.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.magnific-popup.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

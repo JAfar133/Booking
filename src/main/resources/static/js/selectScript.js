@@ -1,4 +1,4 @@
-var select = document.querySelector('select');
+var select = document.querySelector('#post');
 var student = document.querySelector('.student')
 var worker = document.querySelector('.worker')
 worker.style = 'display: none'

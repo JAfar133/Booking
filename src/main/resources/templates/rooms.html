@@ -20,6 +20,7 @@
 <body>
 <div th:insert="~{blocks/header :: header}"></div>
 
+
     <!-- Breadcrumb Section Begin -->
     <div class="breadcrumb-section">
         <div class="container">
@@ -46,14 +47,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <div class="bt-option">
-                                <h4 style="color:#000 ">Свободные помещения на 13 Марта 2023 года 8:30 - 16:00</h4>
+                            <div class="bt-option" >
+                                <h4 style="color:#000 " th:text="${'Свободные помещения на '
+                                +booking_with_error.date + ' - ' + booking_with_error.timeStart+
+                                '-'+booking_with_error.timeEnd}"></h4>
                             </div>
                         </div>
-                    </div>
-                    <div th:each="room, count : ${rooms}">
-                        <h5 th:text="${count.count+' '+room.name + ' ' + room.address+'        '}"></h5>
-                        <br>
                     </div>
                 </div>
             </div>

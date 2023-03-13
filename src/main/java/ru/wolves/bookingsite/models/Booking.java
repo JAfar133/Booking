@@ -57,6 +57,12 @@ public class Booking {
         this.customer = customer;
     }
 
+    public Booking(LocalDate date, Date timeStart, Date timeEnd) {
+        this.date = date;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+    }
+
     public Booking() {
     }
 
@@ -68,7 +74,7 @@ public class Booking {
         this.id = id;
     }
 
-    public boolean getConfirmed() {
+    public boolean isConfirmed() {
         return confirmed;
     }
 

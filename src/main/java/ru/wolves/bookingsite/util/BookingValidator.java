@@ -25,8 +25,18 @@ public class BookingValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Booking booking = (Booking) target;
+        if(booking.getTimeStart() == null){
+            reject(errors,"timeStart","Заполните поле");
+        }
+        if(booking.getTimeEnd() == null){
+            reject(errors,"timeEnd","Заполните поле");
+        }
+        if(booking.getDate() == null){
+            reject(errors,"date","Заполните поле");
+        }
         if(booking.getTimeStart().getTime() - booking.getTimeEnd().getTime() >= 0){
             reject(errors,"timeEnd","Время окончания не может быть меньше или совпадать с началом");
+            return;
         }
         placeIsNotFree(booking,errors);
 
@@ -34,7 +44,7 @@ public class BookingValidator implements Validator {
 
     private void placeIsNotFree(Booking booking, Errors errors){
         bookingServiceImpl.findAllByRoomHall(booking.getPlace()).forEach(booking1 -> {
-            if (booking1.getDate() != null && booking1.getDate().equals(booking.getDate())) {
+            if (booking1.isConfirmed() && booking1.getDate().equals(booking.getDate())) {
                 if(booking1.getTimeStart().getTime() <= booking.getTimeStart().getTime()) {
                     if (booking1.getTimeEnd().getTime() > booking.getTimeStart().getTime()) {
                         reject(errors,"place","Помещение занято в это время. Выберите другое помещение или измените время");
@@ -51,6 +61,7 @@ public class BookingValidator implements Validator {
             errors.rejectValue(field,"",message);
         }catch (NotReadablePropertyException e){
             errors.reject("101","unexcepted error");
+            System.out.println(e.getLocalizedMessage());
         }
     }
 }

@@ -102,6 +102,7 @@
             dateFormat: 'dd MM, yy',
             altFormat: 'yy-mm-dd',
             altField: '#alt-date',
+            required: true
         })
     });
 
@@ -114,7 +115,7 @@
         })
     });
     $(function(){
-        $("#time-out").timepicker({
+        $("#time-end").timepicker({
             minTime: '8:30',
             maxTime: '22:00',
             hourMin: 8,

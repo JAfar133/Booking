@@ -1,0 +1,48 @@
+<div th:fragment="modal-admin-date-change">
+
+  <div class="modal fade" id="change-date-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" >
+      <div class="modal-content">
+        <form th:action="@{/admin/change-date/{id}(id=${booking.id})}" th:object="${bookingEdit}" th:method="patch">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Пожалуйста предоставьте следующую информацию</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="check-date">
+                <label for="date-in">Дата:</label>
+                <input type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
+                <input th:field="*{date}"
+                       th:value="${booking.date}"
+                       type="text"id="alt-date" required="required" hidden="hidden">
+
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}">Введи корректную дату</div>
+              </div>
+              <div class="check-date">
+                <label for="time-start">Начало:</label>
+                <input th:field="*{timeStart}"
+                       th:value="${booking.timeStart}"
+                       type="text" class="date-input" id="time-start" required="required">
+
+              </div>
+              <div class="check-date">
+                <label for="time-end">Конец:</label>
+                <input th:field="*{timeEnd}"
+                       th:value="${booking.timeEnd}"
+                       type="text" class="date-input" id="time-end" required="required">
+
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"></div>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('place')}"> Время забронировано </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- End modal-->

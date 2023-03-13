@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wolves.bookingsite.models.Booking;
+import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.RoomHall;
 import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
@@ -39,6 +40,7 @@ public class RoomsController {
             }
             model.addAttribute("rooms", roomHallService.findFreeRooms(booking));
             model.addAttribute("free_rooms",true);
+            model.addAttribute("booking_with_error",booking);
             return "rooms";
         }
         List<RoomHall> rooms = roomHallService.findAllRoomHall();
@@ -49,7 +51,9 @@ public class RoomsController {
     }
     @GetMapping("/{engName}")
     public String roomPage(@PathVariable("engName") String engName,
-                           @ModelAttribute("booking") Booking booking, Model model){
+                           @ModelAttribute("booking") Booking booking,
+                           @ModelAttribute Person person, Model model){
+        model.addAttribute("errors",true); // Костыль TODO
         RoomHall room = roomHallService.findByEngName(engName);
         model.addAttribute("room",room);
         booking.setPlace(room);
@@ -58,17 +62,20 @@ public class RoomsController {
     @PostMapping("/{engName}")
     public String booking(@PathVariable("engName") String engName,
                           @Valid @ModelAttribute("booking") Booking booking,
-                          BindingResult bindingResult, HttpServletRequest request, Model model){
+                          BindingResult bindingResult, Model model,
+                          @ModelAttribute Person person, HttpServletRequest request){
         bookingValidator.validate(booking,bindingResult);
         HttpSession session = request.getSession();
         RoomHall room = roomHallService.findByEngName(engName);
         model.addAttribute("room",room);
         if(bindingResult.hasErrors()) {
+            model.addAttribute("errors",true);
             session.setAttribute("booking_with_error",booking);
             return "room-details";
         }
         session.setAttribute("booking_with_error",null);
+        model.addAttribute("errors", false);
         session.setAttribute("booking",booking);
-        return "redirect:/booking";
+        return "room-details";
     }
 }

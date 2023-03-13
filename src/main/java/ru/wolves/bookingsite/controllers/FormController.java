@@ -34,55 +34,41 @@ public class FormController {
         this.personValidator = personValidator;
     }
     @GetMapping("/")
-    public String placeForm(@ModelAttribute("booking") Booking booking, Model model){
+    public String placeForm(@ModelAttribute("booking") Booking booking, @ModelAttribute Person person, Model model){
         model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
+        model.addAttribute("errors", true); // Костыль TODO
         return "index";
     }
     @PostMapping("/")
-    public String booking(@Valid @ModelAttribute("booking") Booking booking,
-                            BindingResult bindingResult, Model model, HttpServletRequest request){
+    public String booking(@Valid @ModelAttribute("booking") Booking booking, BindingResult bindingResult,
+                          @ModelAttribute Person person, Model model, HttpServletRequest request){
 
         bookingValidator.validate(booking,bindingResult);
         HttpSession session = request.getSession();
         if(bindingResult.hasErrors()) {
             session.setAttribute("booking_with_error",booking);
             model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
+            model.addAttribute("errors", true);
             return "index";
         }
+        model.addAttribute("errors", false);
+        model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
         session.setAttribute("booking",booking);
-        return "redirect:/booking";
-    }
-
-    @GetMapping("/booking")
-    public String personForm(@ModelAttribute("person") Person person, Model model
-            , HttpServletRequest request){
-        HttpSession session = request.getSession();
-        if(session.isNew()) {
-            session.invalidate();
-            return "redirect:/";
-        }
-        Person personFromSession = (Person) session.getAttribute("person");
-        if(personFromSession!=null){
-            model.addAttribute("person",personFromSession);
-        }
-        Booking booking = (Booking) session.getAttribute("booking");
-        if(booking == null) return "redirect:/";
-
-        model.addAttribute("booking",booking);
-        return "person-details";
+        return "index";
     }
 
     @PostMapping("/booking")
     public String addBooking(@Valid @ModelAttribute("person") Person person,
+                             BindingResult bindingResult,
                              @ModelAttribute("booking") Booking booking1,
-                             BindingResult bindingResult, HttpServletRequest request){
+                             HttpServletRequest request){
         HttpSession session = request.getSession();
         Booking booking = (Booking) session.getAttribute("booking");
 
         personValidator.validate(person,bindingResult);
         bookingValidator.validate(booking,bindingResult);
         if(bindingResult.hasErrors()) {
-            return "person-details";
+            return "index";
         }
         booking.setComment(booking1.getComment());
         bookingServiceImpl.savePersonWithBooking(person, booking);

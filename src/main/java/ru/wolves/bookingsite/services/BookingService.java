@@ -13,5 +13,6 @@ public interface BookingService {
     void deleteBooking(Long id);
     Booking updateBooking(Booking booking);
     List<Booking> findAllUnConfirmedBooking();
+    List<Booking> findAllConfirmedBooking();
 
 }
