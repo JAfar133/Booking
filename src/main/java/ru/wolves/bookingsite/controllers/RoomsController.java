@@ -78,4 +78,6 @@ public class RoomsController {
         session.setAttribute("booking",booking);
         return "room-details";
     }
+
+
 }

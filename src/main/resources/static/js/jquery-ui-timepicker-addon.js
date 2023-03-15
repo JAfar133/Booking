@@ -33,7 +33,7 @@
 	* Settings for (groups of) time pickers are maintained in an instance object,
 	* allowing multiple different settings on the same page.
 	*/
-    
+
 	var Timepicker = function () {
 		this.regional = []; // Available regional settings, indexed by language code
 		this.regional[''] = { // Default regional settings
@@ -56,6 +56,7 @@
 		this._defaults = { // Global defaults for all the datetime picker instances
 			showButtonPanel: true,
 			timeOnly: false,
+			timeInput: false,
 			timeOnlyShowDate: false,
 			showHour: null,
 			showMinute: null,
@@ -65,7 +66,7 @@
 			showTimezone: null,
 			showTime: true,
 			stepHour: 1,
-			stepMinute: 5,
+			stepMinute: 30,
 			stepSecond: 1,
 			stepMillisec: 1,
 			stepMicrosec: 1,
@@ -491,7 +492,7 @@
 				} // end for loop
 
 				// Add timezone options
-				
+
 				// End timezone options
 
 				// inject timepicker into datepicker
@@ -2272,7 +2273,7 @@ $.datepicker.regional['ru'] = {
 	prevText: '<Пред',
 	nextText: 'След>',
 	currentText: 'Сегодня',
-	monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь',
+	monthNames: ['Января','Февраля','Марта','Апреля','Мая','Июня',
 	'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
 	monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн',
 	'Июл','Авг','Сен','Окт','Ноя','Дек'],

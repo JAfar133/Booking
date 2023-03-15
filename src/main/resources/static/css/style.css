@@ -73,6 +73,11 @@ p {
 img {
 	max-width: 100%;
 }
+.modal.custom .modal-dialog {
+	position: absolute;
+	right: 0;
+
+}
 input:focus, select:focus, button:focus, textarea:focus {
 	outline: none;
 }
@@ -401,6 +406,7 @@ ul, ol {
 .menu-item .nav-menu .mainmenu li {
 	list-style: none;
 	display: inline-block;
+
 	position: relative;
 	z-index: 1;
 }
@@ -426,6 +432,7 @@ ul, ol {
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
 	transition: all 0.3s;
+	text-decoration: none;
 }
 .menu-item .nav-menu .mainmenu li a:after {
 	position: absolute;
@@ -621,6 +628,25 @@ ul, ol {
 	margin-top: 30px;
 }
 
+
+.select-room form .select-option label {
+	font-size: 14px;
+	color: #707079;
+	display: block;
+	margin-bottom: 10px;
+}
+.select-room {
+	display:flex;
+	justify-content: space-between;
+}
+.select-room form button[type="submit"]{
+	font-size: 14px;
+	border: 1px solid #216DDF;
+	border-radius: 2px;
+	font-weight: 500;
+	height: 35px;
+	margin-top: 4px;
+}
 .modal-footer {
 	display: flex;
 	justify-content: end;
@@ -697,7 +723,6 @@ ul, ol {
 	width: 100%;
 }
 .modal-footer button {
-	display: block;
 	font-size: 14px;
 	text-transform: uppercase;
 	border: 1px solid #216DDF;
@@ -706,7 +731,6 @@ ul, ol {
 	font-weight: 500;
 	background: transparent;
 	height: 46px;
-	width: 30%;
 	margin-top: 30px;
 }
 .hero-slider {

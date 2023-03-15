@@ -96,9 +96,14 @@
     /*------------------
 		Date Picker
 	--------------------*/
+    function disableSunday(sunday){
+        var calendarday = sunday.getDay();
+        return [(calendarday!=0),''];
+    };
     $(function() {
         $("#date-in").datepicker({
             minDate: 0,
+            beforeShowDay: disableSunday,
             dateFormat: 'dd MM, yy',
             altFormat: 'yy-mm-dd',
             altField: '#alt-date',
@@ -122,12 +127,12 @@
 	        hourMax: 22
         });
     });
-
-
-
     /*------------------
 		Nice Select
 	--------------------*/
     $("select").niceSelect();
 
 })(jQuery);
+
+
+
