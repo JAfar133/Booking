@@ -114,7 +114,8 @@
     </div>
     <script type="text/javascript" th:inline="javascript">
         var errors1 = /*[[${errors}]]*/;
-        $(window).on('load', function () {
+        $(window).on('load', function (e) {
+            e.preventDefault();
             console.log(errors1)
             if(!errors1){
                 $('#exampleModal').modal('show');

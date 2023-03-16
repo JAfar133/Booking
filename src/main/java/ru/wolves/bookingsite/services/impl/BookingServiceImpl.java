@@ -13,6 +13,7 @@ import ru.wolves.bookingsite.repositories.BookingRepo;
 import ru.wolves.bookingsite.repositories.PersonRepo;
 import ru.wolves.bookingsite.services.BookingService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -101,5 +102,10 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> findAllConfirmedBooking() {
         return bookingRepo.findAllByConfirmedIsTrue();
+    }
+
+    @Override
+    public List<Booking> findAllConfirmedBookingWithPlaceAndDate(RoomHall roomHall, LocalDate date) {
+        return bookingRepo.findAllByConfirmedIsTrueAndPlaceAndDate(roomHall,date);
     }
 }

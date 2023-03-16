@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.Person;
-import ru.wolves.bookingsite.models.RoomHall;
 import ru.wolves.bookingsite.services.impl.BookingServiceImpl;
-import ru.wolves.bookingsite.services.impl.PersonServiceImpl;
 import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
 import ru.wolves.bookingsite.util.PersonValidator;
@@ -58,23 +59,24 @@ public class FormController {
     }
 
     @PostMapping("/booking")
-    public String addBooking(@Valid @ModelAttribute("person") Person person,
-                             BindingResult bindingResult,
-                             @ModelAttribute("booking") Booking booking1,
-                             HttpServletRequest request){
+    public String saveBooking(@Valid @ModelAttribute("person") Person person,
+                              BindingResult bindingResult,
+                              @ModelAttribute("booking") Booking booking1,
+                              HttpServletRequest request, Model model, RedirectAttributes atrs){
         HttpSession session = request.getSession();
         Booking booking = (Booking) session.getAttribute("booking");
 
         personValidator.validate(person,bindingResult);
         bookingValidator.validate(booking,bindingResult);
         if(bindingResult.hasErrors()) {
+            model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
             return "index";
         }
         booking.setComment(booking1.getComment());
         bookingServiceImpl.savePersonWithBooking(person, booking);
 
         session.setAttribute("person",person);
-        session.setAttribute("booking",null);
-        return "booking/success";
+        atrs.addFlashAttribute("isSuccess",true);
+        return "redirect:"+request.getHeader("referer");
     }
 }

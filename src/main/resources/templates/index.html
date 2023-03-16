@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xml:lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,8 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js" ></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet"/>
     <!-- Css Styles -->
     <th:block th:insert="~{blocks/links :: links}"></th:block>
 </head>
@@ -22,6 +23,7 @@
 
     <!-- Modal -->
     <div th:insert="~{blocks/modal :: modal}"></div>
+    <div th:insert="~{blocks/success-alert :: success-alert}"></div>
 
     <!-- Hero Section Begin -->
     <section class="hero-section">
@@ -62,7 +64,7 @@
                                 </select>
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('place') && !#fields.hasErrors('timeEnd')}">К сожалению данное помещение занято в это время
                                     <!-- /room/{room_id}?free_dates=true -->
-                                    <a href="#">посмотреть свободные даты </a>
+                                    <a th:href="@{'/object/free-date?roomHall='+${booking.place.id}+'&date='+${booking.date}}">посмотреть свободные даты </a>
                                     или
                                     <!-- /rooms?free_rooms=true -->
                                     <a th:href="@{/rooms?free_rooms=true}"> посмотреть свободные помещения на это время</a>
@@ -235,18 +237,23 @@
     <!-- Home Room Section End -->
 
     <div th:insert="~{blocks/footer :: footer}"></div>
-
+    <script type="text/javascript" th:inline="javascript" th:if="${isSuccess}">
+        $(window).on('load', function (e) {
+            e.preventDefault();
+            $('#alert-success').modal('show');
+        });
+    </script>
     <!-- Js Plugins -->
-    <script src="js/selectScript.js"></script>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/jquery-ui-timepicker-addon.js"></script>
-    <script src="js/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="/js/selectScript.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/jquery-ui-timepicker-addon.js"></script>
+    <script src="/js/jquery-ui-timepicker-addon.min.js"></script>
 </body>
 
 </html>

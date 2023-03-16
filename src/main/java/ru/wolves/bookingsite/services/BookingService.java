@@ -1,7 +1,9 @@
 package ru.wolves.bookingsite.services;
 
 import ru.wolves.bookingsite.models.Booking;
+import ru.wolves.bookingsite.models.RoomHall;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,5 +16,6 @@ public interface BookingService {
     Booking updateBooking(Booking booking);
     List<Booking> findAllUnConfirmedBooking();
     List<Booking> findAllConfirmedBooking();
+    List<Booking> findAllConfirmedBookingWithPlaceAndDate(RoomHall roomHall, LocalDate date);
 
 }

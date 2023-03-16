@@ -1,34 +1,30 @@
-<div th:fragment="modal-admin-date-change">
-
-  <div class="modal fade" id="change-date-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div th:fragment="modal-admin-date-change" xmlns:th="http://www.w3.org/1999/xhtml">
+  <div class="modal fade" th:id="'change-date-modal'+${booking.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
       <div class="modal-content">
-        <form th:action="@{/admin/change-date/{id}(id=${booking.id})}" th:object="${bookingEdit}" th:method="patch">
+        <form th:action="@{/admin/change-date/{id}(id=${booking.id})}" th:object="${booking}" th:method="patch">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Пожалуйста предоставьте следующую информацию</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Измените дату</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" th:id="'modal'+${booking.id}">
               <div class="check-date">
-                <label for="date-in">Дата:</label>
-                <input type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
-                <input th:field="*{date}"
-                       th:value="${booking.date}"
-                       type="text"id="alt-date" required="required" hidden="hidden">
-
+                <label th:for="'date-in'+${booking.id}">Дата:</label>
+                <input style="text-transform: uppercase"
+                       th:value="${#temporals.format(booking.date, 'dd MMMM, yyyy')}" type="text" class="date-input" th:id="'date-in'+${booking.id}" required="required" autocomplete="off" onkeydown="return false;" >
+                <input th:value="${#temporals.format(booking.date, 'yyyy-MM-dd')}" th:name="date"
+                       type="text" th:id="'alt-date'+${booking.id}" required="required" hidden="hidden">
                 <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}">Введи корректную дату</div>
               </div>
               <div class="check-date">
                 <label for="time-start">Начало:</label>
-                <input th:field="*{timeStart}"
-                       th:value="${booking.timeStart}"
+                <input th:value="${#dates.format(booking.timeStart, 'HH:mm')}" th:name="timeStart"
                        type="text" class="date-input" id="time-start" required="required">
 
               </div>
               <div class="check-date">
                 <label for="time-end">Конец:</label>
-                <input th:field="*{timeEnd}"
-                       th:value="${booking.timeEnd}"
+                <input th:value="${#dates.format(booking.timeEnd, 'HH:mm')}" th:name="timeEnd"
                        type="text" class="date-input" id="time-end" required="required">
 
                 <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"></div>
@@ -36,7 +32,7 @@
               </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Подтвердить</button>
+            <button type="submit" class="btn btn-primary">Изменить дату и подтвердить</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
           </div>
         </form>
