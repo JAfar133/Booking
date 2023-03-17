@@ -1,5 +1,6 @@
 package ru.wolves.bookingsite.repositories;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.RoomHall;
@@ -12,5 +13,5 @@ public interface BookingRepo extends JpaRepository<Booking,Long> {
     List<Booking> findAllByDate(LocalDate date);
     List<Booking> findAllByConfirmedIsFalse();
     List<Booking> findAllByConfirmedIsTrue();
-    List<Booking> findAllByConfirmedIsTrueAndPlaceAndDate(RoomHall roomHall,LocalDate date);
+    List<Booking> findAllByPlaceAndDate(Sort sort, RoomHall roomHall, LocalDate date);
 }

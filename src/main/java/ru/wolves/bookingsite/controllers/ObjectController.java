@@ -5,16 +5,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.RoomHall;
 import ru.wolves.bookingsite.services.impl.BookingServiceImpl;
 import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 
 import java.time.LocalDate;
-import java.util.*;
 
 @Controller
 @RequestMapping("/object")
@@ -38,8 +35,8 @@ public class ObjectController {
             date = LocalDate.now();
             roomHall = roomHallService.findRoom(1L);
         }
-        var confirmedBookings = bookingService.findAllConfirmedBookingWithPlaceAndDate(roomHall,date);
-        model.addAttribute("confirmedBooking", confirmedBookings);
+        var bookings = bookingService.findAllBookingWithPlaceAndDate(roomHall,date);
+        model.addAttribute("bookings", bookings.isEmpty() ? null : bookings);
         model.addAttribute("date",date);
         model.addAttribute("roomHall",roomHall);
         model.addAttribute("halls", roomHallService.findAllRoomHall());

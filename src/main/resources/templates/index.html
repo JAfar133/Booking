@@ -7,7 +7,7 @@
     <meta name="keywords" content="Sona, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sona | Template</title>
+    <title>Бронирование Севастополь</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
@@ -37,11 +37,11 @@
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
-                        <h3>Забронируете помещение</h3>
+                        <h3>Бронирование помещений</h3>
                         <form th:action="@{/}" th:object="${booking}" th:method="post" >
                             <div class="check-date">
                                 <label for="date-in">Дата:</label>
-                                <input type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
+                                <input th:value="${#temporals.format(booking.date, 'dd MMMM, yyyy')}"type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
                                 <input th:field="*{date}" type="text"id="alt-date" required="required" hidden="hidden">
                                 <i class="icon_calendar"></i>
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}">Введи корректную дату</div>

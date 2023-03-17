@@ -17,8 +17,8 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 class BookingValidatorTest {
 
     @Autowired

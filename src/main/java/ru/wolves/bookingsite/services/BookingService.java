@@ -1,5 +1,6 @@
 package ru.wolves.bookingsite.services;
 
+import org.springframework.data.domain.Sort;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.RoomHall;
 
@@ -16,6 +17,6 @@ public interface BookingService {
     Booking updateBooking(Booking booking);
     List<Booking> findAllUnConfirmedBooking();
     List<Booking> findAllConfirmedBooking();
-    List<Booking> findAllConfirmedBookingWithPlaceAndDate(RoomHall roomHall, LocalDate date);
+    List<Booking> findAllBookingWithPlaceAndDate(RoomHall roomHall, LocalDate date);
 
 }
