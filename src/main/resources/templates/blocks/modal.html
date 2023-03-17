@@ -9,7 +9,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="check-date form">
-                            <label for="last_name">Фамилия:</label>
+                            <label for="last_name">Фамилия ⃰ </label>
                             <input class=""
                                    th:field="*{lastName}"
                                    type="text"
@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="check-date form">
-                            <label for="first_name">Имя:</label>
+                            <label for="first_name">Имя ⃰ </label>
                             <input class=""
                                    th:field="*{firstName}"
                                    type="text"
@@ -30,7 +30,7 @@
                             <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
                         </div>
                         <div class="check-date form">
-                            <label for="middle_name">Отвество:</label>
+                            <label for="middle_name">Отчество ⃰ </label>
                             <input class="date-input"
                                    th:field="*{middleName}"
                                    type="text"
@@ -40,7 +40,7 @@
                             <div class="alert alert-danger" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"/>
                         </div>
                         <div class="check-date form">
-                            <label for="phone">Номер телефона:</label>
+                            <label for="phone">Номер телефона ⃰ </label>
                             <input placeholder="+7xxxxxxxxxx"
                                    th:field="*{phoneNumber}"
                                    type="text"
@@ -51,7 +51,7 @@
                             <div class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"/>
                         </div>
                         <div class="select-option">
-                            <label for="post">Должность:</label>
+                            <label for="post">Должность</label>
                             <select th:field="*{post}" style="color: #6C757D" id="post" aria-label="Default select example">
                                 <option th:value="Должность" th:text="Должность" disabled selected></option>
                                 <option th:value="Студент" th:text="Студент" id="student"></option>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="student" style="display: block" th:style="${person.post=='Работник' ? 'display:none' : 'display:block'}">
                             <div class="check-date form">
-                                <label for="institute">Институт:</label>
+                                <label for="institute">Институт ⃰ </label>
                                 <input th:field="*{institute}"
                                        type="text"
                                        name="institute"
@@ -69,7 +69,7 @@
                             </div>
 
                             <div class="select-option">
-                                <label for="course">Курс:</label>
+                                <label for="course">Курс</label>
                                 <select th:field="*{course}" style="color: #6C757D" id = "course" aria-label="Default select example">
                                     <option th:value="'-1'" disabled selected th:text="Курс"></option>
                                     <option th:value="'1'" th:text="1"></option>
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="check-date form worker" style="display:none; width: 100%" th:style="${person.post==null || person.post=='Студент' ? 'display:none' : 'display:block'}">
-                            <label for="structure">Структура:</label>
+                            <label for="structure">Структура ⃰ </label>
                             <input th:field="*{structure}"
                                    type="text"
                                    name="structure"

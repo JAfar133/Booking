@@ -1,7 +1,6 @@
 package ru.wolves.bookingsite.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.services.impl.BookingServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/admin")

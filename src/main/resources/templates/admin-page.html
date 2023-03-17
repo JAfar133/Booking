@@ -7,7 +7,7 @@
   <meta name="keywords" content="Sona, unica, creative, html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Sona | Template</title>
+  <title>Редактирование</title>
 
   <!--  Bootstrap  -->
 
@@ -60,14 +60,14 @@
   <div class="container">
     <div class="card mb-4 border-primary" th:each="booking : ${bookings}">
       <div class="card-header" style="display: flex; justify-content: space-between">
-        <h5 th:text="${'№ ' + booking.id}"/>
-        <h5 th:text="${booking.bookedAt}"/>
+        <h5 th:text="${'Заказ № ' + booking.id}"/>
+        <h5 th:text="${#dates.format(booking.bookedAt, 'dd-MM-yyyy, HH:mm')}"/>
       </div>
       <div class="card-body" >
         <h5 style="font-weight: bold" class="card-title" th:text="${booking.place.name+', '+booking.place.address}"></h5>
         <div>
-          <span><b>Время бронирования:</b></span>
-          <span th:text="${'  '+booking.date+' - '+booking.timeStart+'-'+booking.timeEnd}"/>
+          <span><b>Дата бронирования:</b></span>
+          <span th:text="${'  '+#temporals.format(booking.date, 'dd MMMM yyyy')+',  '+booking.timeStart+'-'+booking.timeEnd}"/>
         </div>
         <div>
           <span><b>Заказчик: </b></span>

@@ -70,7 +70,7 @@
                         <form th:action="@{/rooms/{name}(name=${room.engName})}" th:object="${booking}" method="post" >
                             <div class="check-date">
                                 <label for="date-in">Дата:</label>
-                                <input type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
+                                <input th:value="${#temporals.format(booking.date, 'dd MMMM, yyyy')}" type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
                                 <input th:field="*{date}" type="text"id="alt-date" required="required" hidden="hidden">
                                 <i class="icon_calendar"></i>
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>

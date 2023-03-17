@@ -636,6 +636,8 @@ ul, ol {
 	margin-bottom: 10px;
 }
 .select-room {
+	margin-left: auto !important;
+	margin-right: auto !important;
 	display:flex;
 	justify-content: space-between;
 }
@@ -1191,6 +1193,28 @@ ul, ol {
 }
 .about-page-services .ap-service-item .api-text h3 {
 	color: #ffffff;
+}
+.myFreeDate {
+	max-width: 100%;
+	overflow-x: auto;
+	overflow-style: marquee-line;
+}
+.blocks-date {
+	display:flex;
+	flex-direction: row;
+}
+.blocks-date > div {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 200px;
+	height: 50px;
+	padding: 5px;
+	margin-right: 10px;
+}
+.block-date>div {
+	margin-top: 0.625em;
+	vertical-align: middle;
 }
 /*---------------------
   Video Section

@@ -1,9 +1,7 @@
 package ru.wolves.bookingsite.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.wolves.bookingsite.models.Booking;
@@ -105,7 +103,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> findAllConfirmedBookingWithPlaceAndDate(RoomHall roomHall, LocalDate date) {
-        return bookingRepo.findAllByConfirmedIsTrueAndPlaceAndDate(roomHall,date);
+    public List<Booking> findAllBookingWithPlaceAndDate(RoomHall roomHall, LocalDate date) {
+        return bookingRepo.findAllByPlaceAndDate(Sort.by("timeStart"), roomHall, date);
     }
 }

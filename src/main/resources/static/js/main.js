@@ -133,6 +133,34 @@
     $("select").niceSelect();
 
 })(jQuery);
+$('.myFreeDate .block-date').each(function (){
+    var hundred = 22-8.30;
+    var timeStart = $(this).find('div').eq(0).text().replaceAll(':','.');
+    var timeEnd = $(this).find('div').eq(1).text().replaceAll(':','.');
+    var dx = timeEnd - timeStart;
+    console.log(timeStart+" "+ timeEnd);
+    console.log(dx);
+    var width = $('.myFreeDate').css("width").replaceAll('px','');
+    var pixels = 100*dx/hundred*10+"px";
+    var percent = dx/hundred*width*0.95+"px";
+    console.log(pixels);
+    console.log(percent);
+    console.log(width);
+    if(dx==hundred){
+
+        width = Number(width);
+        width-=10;
+        $(this).css({'min-width': '300px', 'width': width+"px"});
+    }
+    else{
+    $(this).css({'width': percent,
+                       'min-width':'95px'});
+    }
+    if ($(this).css('color') == 'rgb(255, 0, 0)') {
+        $(this).addClass('alert-danger');
+    }
+    else $(this).addClass('alert-primary');
+});
 
 
 

@@ -44,7 +44,7 @@ public class BookingValidator implements Validator {
 
     private void placeIsNotFree(Booking booking, Errors errors){
         bookingServiceImpl.findAllByRoomHall(booking.getPlace()).forEach(booking1 -> {
-            if (booking1.isConfirmed() && booking1.getDate().equals(booking.getDate())) {
+            if (booking1.getDate().equals(booking.getDate())) {
                 if(booking1.getTimeStart().getTime() <= booking.getTimeStart().getTime()) {
                     if (booking1.getTimeEnd().getTime() > booking.getTimeStart().getTime()) {
                         reject(errors,"place","Помещение занято в это время. Выберите другое помещение или измените время");
