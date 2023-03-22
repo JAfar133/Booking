@@ -2,6 +2,4 @@
 
 chmod +x mvnw
 ./mvnw clean package
-
-echo 'Copy files...'
-scp -i
+java -jar ../target/bookingSite-0.0.1-SNAPSHOT.jar

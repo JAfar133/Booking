@@ -11,7 +11,7 @@ import java.util.List;
 public interface BookingRepo extends JpaRepository<Booking,Long> {
     List<Booking> findAllByPlace(RoomHall roomHall);
     List<Booking> findAllByDate(LocalDate date);
-    List<Booking> findAllByConfirmedIsFalse();
+    List<Booking> findAllByConfirmedIsFalse(Sort sort);
     List<Booking> findAllByConfirmedIsTrue();
     List<Booking> findAllByPlaceAndDate(Sort sort, RoomHall roomHall, LocalDate date);
 }

@@ -38,41 +38,35 @@
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
                         <h3>Бронирование помещений</h3>
-                        <form th:action="@{/}" th:object="${booking}" th:method="post" >
+                        <form id="booking-form-index" >
                             <div class="check-date">
                                 <label for="date-in">Дата:</label>
-                                <input th:value="${#temporals.format(booking.date, 'dd MMMM, yyyy')}"type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
-                                <input th:field="*{date}" type="text"id="alt-date" required="required" hidden="hidden">
+                                <input id="date-in" required="required" onkeydown="return false;" autocomplete="off">
+                                <input type="text"id="alt-date" required="required" hidden="hidden">
                                 <i class="icon_calendar"></i>
-                                <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}">Введи корректную дату</div>
+<!--                                <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}">Введи корректную дату</div>-->
                             </div>
                             <div class="check-date">
                                 <label for="time-start">Начало:</label>
-                                <input th:field="*{timeStart}" type="text" class="date-input" id="time-start" required="required">
+                                <input type="text" class="date-input" id="time-start" required="required">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="check-date">
                                 <label for="time-end">Конец:</label>
-                                <input th:field="*{timeEnd}" type="text" class="date-input" id="time-end" required="required">
+                                <input type="text" class="date-input" id="time-end" required="required">
                                 <i class="icon_calendar"></i>
-                                <div class="alert alert-danger" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}"></div>
+                                <div id="wrong-time-end-alert" class="alert alert-danger" style="display:none"></div>
                             </div>
                             <div class="select-option">
                                 <label for="room">Помещение:</label>
-                                <select id="room" th:field="*{place}">
+                                <select id="room">
                                     <option th:each="room : ${halls}" th:value="${room.id}" th:text="${room.name+' - '+room.address}"></option>
                                 </select>
-                                <div class="alert alert-danger" th:if="${#fields.hasErrors('place') && !#fields.hasErrors('timeEnd')}">К сожалению данное помещение занято в это время
-                                    <!-- /room/{room_id}?free_dates=true -->
-                                    <a th:href="@{'/object/free-date?roomHall='+${booking.place.id}+'&date='+${booking.date}}">посмотреть свободные даты </a>
-                                    или
-                                    <!-- /rooms?free_rooms=true -->
-                                    <a th:href="@{/rooms?free_rooms=true}"> посмотреть свободные помещения на это время</a>
-                                </div>
+                                <div class="alert alert-danger" id="place-not-free-alert" style="display: none"></div>
 
                             </div>
                             <!-- /person_details -->
-                            <button type="submit" class="btn btn-primary" >Продолжить</button>
+                            <button id="booking-submit-btn" type="submit" class="btn btn-primary" >Продолжить</button>
                         </form>
                     </div>
                 </div>
@@ -237,12 +231,7 @@
     <!-- Home Room Section End -->
 
     <div th:insert="~{blocks/footer :: footer}"></div>
-    <script type="text/javascript" th:inline="javascript" th:if="${isSuccess}">
-        $(window).on('load', function (e) {
-            e.preventDefault();
-            $('#alert-success').modal('show');
-        });
-    </script>
+
     <!-- Js Plugins -->
     <script src="/js/selectScript.js"></script>
     <script src="/js/jquery-3.3.1.min.js"></script>

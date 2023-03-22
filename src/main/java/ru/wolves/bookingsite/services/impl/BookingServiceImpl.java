@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.wolves.bookingsite.exceptions.BookingNotFoundException;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.RoomHall;
@@ -37,11 +38,11 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepo.findAll();
     }
 
-    public Booking findBooking(Long id){
+    public Booking findBooking(Long id) throws BookingNotFoundException {
         Optional<Booking> booking = bookingRepo.findById(id);
         if(booking.isPresent())
             return booking.get();
-        else return null;
+        else throw new BookingNotFoundException("Бронь с таким id не существует");
     }
 
     @Transactional
@@ -77,14 +78,21 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void deleteBooking(Booking booking) {
         bookingRepo.delete(booking);
+        Person person = booking.getCustomer();
+        personRepo.delete(person);
     }
 
     @Override
     @Transactional
-    public void deleteBooking(Long id) {
-        Person person = findBooking(id).getCustomer();
-        bookingRepo.delete(findBooking(id));
-        personRepo.delete(person);
+    public void deleteBooking(Long id) throws BookingNotFoundException {
+        Booking booking = findBooking(id);
+        if(booking!=null){
+            Person person = findBooking(id).getCustomer();
+            bookingRepo.delete(findBooking(id));
+            personRepo.delete(person);
+        }
+        else throw new BookingNotFoundException("Бронь с таким id не существует");
+
     }
 
     @Override
@@ -95,7 +103,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> findAllUnConfirmedBooking() {
-        return bookingRepo.findAllByConfirmedIsFalse();
+        return bookingRepo.findAllByConfirmedIsFalse(Sort.by("bookedAt"));
     }
     @Override
     public List<Booking> findAllConfirmedBooking() {

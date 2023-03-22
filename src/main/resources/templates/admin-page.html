@@ -58,7 +58,7 @@
 <!-- Admin Section Begin -->
 <section class="room-details-section spad">
   <div class="container">
-    <div class="card mb-4 border-primary" th:each="booking : ${bookings}">
+    <div class="card mb-4 border-primary" th:id="'booking-card'+${booking.id}" th:each="booking : ${bookings}">
       <div class="card-header" style="display: flex; justify-content: space-between">
         <h5 th:text="${'Заказ № ' + booking.id}"/>
         <h5 th:text="${#dates.format(booking.bookedAt, 'dd-MM-yyyy, HH:mm')}"/>
@@ -88,14 +88,14 @@
         </div>
       </div>
       <div class="card-footer" th:id="'footer'+${booking.id}" style="display: flex; justify-content: end">
-        <form th:action="@{/admin/{id}(id=${booking.id})}" th:method="patch">
-          <input class="btn btn-outline-primary" type="submit" th:value="Подтвердить"/>
+        <form th:id="'admin-confirm-form'+${booking.id}">
+          <input th:id="'confirm-btn'+${booking.id}" class="btn btn-outline-primary confirm-btn" type="submit" th:value="Подтвердить"/>
         </form>
 
         <input data-bs-toggle="modal" class="btn btn-outline-primary date-change" type="button" th:id = "'date-change'+${booking.id}" value="Изменить дату"/>
         <div id="modal-change" th:insert="~{blocks/modal-admin-date-change :: modal-admin-date-change}"></div>
-        <form th:action="@{/admin/{id}(id=${booking.id})}" th:method="delete">
-          <input class="btn btn-outline-danger" type="submit" th:value="Отклонить"/>
+        <form th:id="'admin-delete-form'+${booking.id}">
+          <input th:id="'delete-btn'+${booking.id}"class="btn btn-outline-danger delete-btn" type="submit" th:value="Отклонить"/>
         </form>
 
       </div>
@@ -104,71 +104,6 @@
   </div>
 </section>
 
-<script th:inline="javascript">
-  let button_id;
-  let booking_id
-  let id;
-  var errors1 = /*[[${hasErrors}]]*/;
-  console.log(id);
-  $(window).on('load', function (e) {
-    id = localStorage.getItem('modal_id');
-    e.preventDefault();
-    console.log(errors1);
-    console.log(id);
-    if(errors1==true && id!=null){
-      $(id).modal('show');
-    }
-  });
-  $(".date-change").click(function(e) {
-    button_id = $(this).attr("id");
-    booking_id = button_id.split("date-change")[1];
-    id = "#change-date-modal"+booking_id;
-    localStorage.setItem('modal_id',id);
-    $(id).modal('show');
-    var date_id = "#date-in"+booking_id;
-    var timeStart_id = id+ " " + "#time-start";
-    var timeEnd_id = id+ " " + "#time-end";
-    let altDate_id = "#alt-date"+booking_id;
-    console.log(date_id);
-    console.log(timeStart_id);
-    console.log(timeEnd_id);
-
-    $(function() {
-      $(date_id).datepicker({
-        minDate: 0,
-        beforeShowDay: disableSunday,
-        dateFormat: 'dd MM, yy',
-        altFormat: 'yy-mm-dd',
-        altField: altDate_id
-      })
-    });
-    function disableSunday(sunday){
-      var calendarday = sunday.getDay();
-      return [(calendarday!=0),''];
-    };
-
-    $(function(){
-      $(timeStart_id).timepicker({
-        minTime: '8:30',
-        maxTime: '22:00',
-        hourMin: 8,
-        hourMax: 22
-      })
-    });
-    $(function(){
-      $(timeEnd_id).timepicker({
-        minTime: '8:30',
-        maxTime: '22:00',
-        hourMin: 8,
-        hourMax: 22
-      });
-    });
-  });
-</script>
-<!-- Admin Section End -->
-
-
-<div th:insert="~{blocks/footer :: footer}"></div>
 
 <!-- Js Plugins -->
 <script src="/js/jquery.magnific-popup.min.js"></script>

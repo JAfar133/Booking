@@ -15,15 +15,15 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Поле не может быть пустным")
+    @NotEmpty(message = "Поле не может быть пустым")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotEmpty(message = "Поле не может быть пустным")
+    @NotEmpty(message = "Поле не может быть пустым")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotEmpty(message = "Поле не может быть пустным")
+    @NotEmpty(message = "Поле не может быть пустым")
     @Column(name = "middle_name")
     private String middleName;
 
@@ -32,7 +32,7 @@ public class Person {
     private String post;
 
     @Column(name = "phone")
-    @Pattern(regexp = "\\+\\d{11}", message = "Введите существующий номер")
+    @Pattern(regexp = "\\+\\d{11}", message = "Номер введен неверно")
     private String phoneNumber;
     @Column(name = "institute")
     private String institute;
@@ -164,7 +164,6 @@ public class Person {
         Person person = (Person) o;
         return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(middleName, person.middleName) && Objects.equals(phoneNumber, person.phoneNumber);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, middleName, phoneNumber);

@@ -1,19 +1,18 @@
 package ru.wolves.bookingsite.services;
 
-import org.springframework.data.domain.Sort;
+import ru.wolves.bookingsite.exceptions.BookingNotFoundException;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.RoomHall;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface BookingService {
     List<Booking> findAllBooking();
-    Booking findBooking(Long id);
+    Booking findBooking(Long id) throws BookingNotFoundException;
     void saveBooking(Booking booking);
     void deleteBooking(Booking booking);
-    void deleteBooking(Long id);
+    void deleteBooking(Long id) throws BookingNotFoundException;
     Booking updateBooking(Booking booking);
     List<Booking> findAllUnConfirmedBooking();
     List<Booking> findAllConfirmedBooking();
