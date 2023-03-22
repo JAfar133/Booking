@@ -2,7 +2,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" >
             <div class="modal-content">
-                <form th:action="@{/booking}" th:object="${person}" method="post" >
+                <form id="personForm">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Пожалуйста предоставьте следующую информацию</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -11,116 +11,91 @@
                         <div class="check-date form">
                             <label for="last_name">Фамилия ⃰ </label>
                             <input class=""
-                                   th:field="*{lastName}"
                                    type="text"
                                    name="last_name"
                                    id="last_name"
                                    required>
-                            <div class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
+<!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>-->
                         </div>
 
                         <div class="check-date form">
                             <label for="first_name">Имя ⃰ </label>
                             <input class=""
-                                   th:field="*{firstName}"
                                    type="text"
                                    name="first_name"
                                    id="first_name"
                                    required>
-                            <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
+<!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>-->
                         </div>
                         <div class="check-date form">
                             <label for="middle_name">Отчество ⃰ </label>
                             <input class="date-input"
-                                   th:field="*{middleName}"
                                    type="text"
                                    name="middle_name"
                                    id="middle_name"
                                    required>
-                            <div class="alert alert-danger" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"/>
+<!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"/>-->
                         </div>
                         <div class="check-date form">
                             <label for="phone">Номер телефона ⃰ </label>
                             <input placeholder="+7xxxxxxxxxx"
-                                   th:field="*{phoneNumber}"
                                    type="text"
                                    name="phone"
                                    id="phone"
                                    required>
-
-                            <div class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"/>
+                            <div id="phone-error-alert" class="alert alert-danger" style="display: none"/>
                         </div>
                         <div class="select-option">
                             <label for="post">Должность</label>
-                            <select th:field="*{post}" style="color: #6C757D" id="post" aria-label="Default select example">
-                                <option th:value="Должность" th:text="Должность" disabled selected></option>
-                                <option th:value="Студент" th:text="Студент" id="student"></option>
+                            <select style="color: #6C757D" id="post" aria-label="Default select example">
+                                <option th:value="Должность" th:text="Должность" disabled></option>
+                                <option th:value="Студент" th:text="Студент" id="student" selected></option>
                                 <option th:value="Работник" th:text="Работник" id="worker"></option>
                             </select>
                         </div>
-                        <div class="student" style="display: block" th:style="${person.post=='Работник' ? 'display:none' : 'display:block'}">
+                        <div class="student" style="display: block">
                             <div class="check-date form">
                                 <label for="institute">Институт ⃰ </label>
-                                <input th:field="*{institute}"
-                                       type="text"
+                                <input type="text"
                                        name="institute"
-                                       id="institute">
-                                <div class="alert alert-danger" th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"/>
+                                       id="institute"
+                                       required>
+<!--                                <div class="alert alert-danger" th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"/>-->
                             </div>
 
                             <div class="select-option">
                                 <label for="course">Курс</label>
-                                <select th:field="*{course}" style="color: #6C757D" id = "course" aria-label="Default select example">
-                                    <option th:value="'-1'" disabled selected th:text="Курс"></option>
-                                    <option th:value="'1'" th:text="1"></option>
+                                <select style="color: #6C757D" id = "course" aria-label="Default select example">
+                                    <option th:value="'-1'" disabled th:text="Курс"></option>
+                                    <option th:value="'1'" selected th:text="1"></option>
                                     <option th:value="'2'"th:text="2"></option>
                                     <option th:value="'3'"th:text="3"></option>
                                     <option th:value="'4'"th:text="4"></option>
                                 </select>
                             </div>
                         </div>
-                        <div class="check-date form worker" style="display:none; width: 100%" th:style="${person.post==null || person.post=='Студент' ? 'display:none' : 'display:block'}">
+                        <div class="check-date form worker" style="display:none; width: 100%" >
                             <label for="structure">Структура ⃰ </label>
-                            <input th:field="*{structure}"
-                                   type="text"
+                            <input type="text"
                                    name="structure"
                                    id="structure">
-                            <div class="alert alert-danger" th:if="${#fields.hasErrors('structure')}" th:errors="*{structure}"/>
+<!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('structure')}" th:errors="*{structure}"/>-->
                         </div>
-                        <div class="check-date form" th:object="${booking}">
+                        <div class="check-date form">
                             <label for="comment">Комментарий:</label>
                             <textarea
-                                    th:field="*{comment}"
                                     type="text"
                                     name="comment"
                                     id="comment"></textarea>
-                            <div class="alert alert-danger" th:if="${#fields.hasErrors('place')}">К сожалению помещение уже занято в это время
-                                <!-- /room/{room_id}?free_dates=true -->
-                                <a th:href="@{/}">Изменить дату</a>
-                                <a href="#">Посмотреть свободные даты </a>
-                                или
-                                <!-- /rooms?free_rooms=true -->
-                                <a href="#"> Посмотреть свободные помещения на это время</a>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Продолжить</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button id="person-details-submit-btn" type="submit" class="btn btn-primary">Продолжить</button>
+                        <button id="person-details-close-btn"type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <script type="text/javascript" th:inline="javascript">
-        var errors1 = /*[[${errors}]]*/;
-        $(window).on('load', function (e) {
-            e.preventDefault();
-            console.log(errors1)
-            if(!errors1){
-                $('#exampleModal').modal('show');
-            }
-        });
-    </script>
 </div>
 <!-- End modal-->

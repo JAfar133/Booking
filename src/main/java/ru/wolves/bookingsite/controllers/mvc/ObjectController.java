@@ -1,4 +1,4 @@
-package ru.wolves.bookingsite.controllers;
+package ru.wolves.bookingsite.controllers.mvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
