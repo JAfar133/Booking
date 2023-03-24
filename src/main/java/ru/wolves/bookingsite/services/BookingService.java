@@ -13,6 +13,7 @@ public interface BookingService {
     void saveBooking(Booking booking);
     void deleteBooking(Booking booking);
     void deleteBooking(Long id) throws BookingNotFoundException;
+    void deleteOldBooking();
     Booking updateBooking(Booking booking);
     List<Booking> findAllUnConfirmedBooking();
     List<Booking> findAllConfirmedBooking();

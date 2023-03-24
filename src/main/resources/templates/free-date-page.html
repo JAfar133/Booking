@@ -24,9 +24,9 @@
 <!-- Breadcrumb Section Begin -->
 <div class="breadcrumb-section">
     <div class="container">
-        <div class="row container" style="margin-top:500px;width: 300px; display: block; margin-left: 50px; position: absolute">
+        <div class="row container" style="margin-top:400px;width: 300px; display: flex; margin-left: 50px; position: absolute">
 
-            <div style="color:red; height: 30px; margin-bottom: 10px" class="alert-danger"><p> ЗАНЯТО:</p></div>
+            <div style="height: 30px; margin-bottom: 10px" class="alert-danger"><p> ЗАНЯТО:</p></div>
 
             <div style="height: 30px"class="alert-primary"><p> СВОБОДНО:</p></div>
         </div>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="check-date">
                     <label for="date-in">Дата:</label>
-                    <input th:value="${#temporals.format(date, 'dd MMMM, yyyy')}" type="text" class="date-input" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
+                    <input th:value="${#temporals.format(date, 'dd ')+#strings.capitalize(#temporals.format(date, 'MMMM, yyyy'))}" type="text" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
                     <input name="date" th:value="${date}" type="text" id="alt-date" required="required" hidden="hidden">
                     <i class="icon_calendar"></i>
                 </div>

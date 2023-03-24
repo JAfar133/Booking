@@ -46,7 +46,6 @@ public class BookingRestController {
 
         bookingValidator.validate(booking, result);
         if(errors.hasErrors() || result.hasErrors()){
-            session.setAttribute("booking_with_error",booking);
             return getErrorResponse(result, errors);
         }
 

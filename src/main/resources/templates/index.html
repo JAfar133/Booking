@@ -12,8 +12,6 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js" ></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet"/>
     <!-- Css Styles -->
     <th:block th:insert="~{blocks/links :: links}"></th:block>
 </head>
@@ -48,12 +46,12 @@
                             </div>
                             <div class="check-date">
                                 <label for="time-start">Начало:</label>
-                                <input type="text" class="date-input" id="time-start" required="required">
+                                <input type="text" class="date-input time-start" id="time-start" required="required">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="check-date">
                                 <label for="time-end">Конец:</label>
-                                <input type="text" class="date-input" id="time-end" required="required">
+                                <input type="text" class="date-input time-end" id="time-end" required="required">
                                 <i class="icon_calendar"></i>
                                 <div id="wrong-time-end-alert" class="alert alert-danger" style="display:none"></div>
                             </div>

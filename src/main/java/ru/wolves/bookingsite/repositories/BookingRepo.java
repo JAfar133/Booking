@@ -2,6 +2,7 @@ package ru.wolves.bookingsite.repositories;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.RoomHall;
 

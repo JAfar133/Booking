@@ -1,7 +1,9 @@
 package ru.wolves.bookingsite.services.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.wolves.bookingsite.exceptions.BookingNotFoundException;
@@ -13,16 +15,19 @@ import ru.wolves.bookingsite.repositories.PersonRepo;
 import ru.wolves.bookingsite.services.BookingService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 @Transactional(readOnly = true)
 public class BookingServiceImpl implements BookingService {
     private final BookingRepo bookingRepo;
     private final PersonRepo personRepo;
+    static final Logger LOGGER = Logger.getLogger(BookingServiceImpl.class.getName());
 
     @Autowired
     public BookingServiceImpl(BookingRepo bookingRepo, PersonRepo personRepo) {
@@ -93,6 +98,22 @@ public class BookingServiceImpl implements BookingService {
         }
         else throw new BookingNotFoundException("Бронь с таким id не существует");
 
+    }
+
+    @Override
+    @Scheduled(cron="0 0 3 * * ?") // Каждый день в 3:00
+    @Transactional
+    public void deleteOldBooking() {
+        LOGGER.info(LocalDateTime.now()+": Start scanning old booking...");
+        LocalDate today = LocalDate.now();
+        findAllBooking().stream().forEach(x-> {
+            LocalDate date = x.getDate();
+            if(date.isBefore(today)) {
+                deleteBooking(x);
+                LOGGER.warning("Booking deleted: "+x);
+            }
+
+        });
     }
 
     @Override

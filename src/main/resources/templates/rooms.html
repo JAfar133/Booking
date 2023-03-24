@@ -38,19 +38,41 @@
         </div>
     </div>
     <!-- Breadcrumb Section End -->
-
     
     <section class="rooms-section spad">
         <!-- If user looking for free room on this dates-->
-        <div class="breadcrumb-section" th:if="${booking_with_error!=null}">
+        <div class="breadcrumb-section">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
+                        <form th:method="get" th:action="@{/rooms}" id="free-rooms-form">
+                            <div class="rooms-form">
+                                <div class="rooms-inputs">
+                                    <div class="check-date">
+                                        <input id="date-in" placeholder="Дата" required="required" onkeydown="return false;" autocomplete="off">
+                                        <input th:value="${date}" name="date" type="text"id="alt-date" required="required" hidden="hidden">
+                                        <i class="icon_calendar"></i>
+                                    </div>
+                                    <div class="check-date">
+                                        <input th:value="${timeStart}" placeholder="Начало" name="timeStart" type="text" class="date-input time-start" id="time-start" required="required">
+                                        <i class="icon_calendar"></i>
+                                    </div>
+                                    <div class="check-date">
+                                        <input th:value="${timeEnd}" placeholder="Конец" name="timeEnd" type="text" class="date-input time-end" id="time-end" required="required">
+                                        <i class="icon_calendar"></i>
+                                        <div id="wrong-time-end-alert" class="alert alert-danger" style="display:none"></div>
+                                    </div>
+                                </div>
+                                <input class="free-rooms-button" type="submit" value="Показать свободные">
+                                <a th:href="@{/rooms}" class="free-rooms-button">Показать все</a>
+                            </div>
+
+                        </form>
                         <div class="breadcrumb-text">
-                            <div class="bt-option" >
+                            <div class="bt-option" th:if="${free_rooms}">
                                 <h4 style="color:#000 " th:text="${'Свободные помещения на '
-                                +#temporals.format(booking_with_error.date, 'dd MMMM yyyy') + ' - ' + booking_with_error.timeStart+
-                                '-'+booking_with_error.timeEnd}"></h4>
+                                +#temporals.format(booking.date, 'dd MMMM yyyy') + ' - ' + booking.timeStart+
+                                '-'+booking.timeEnd}"></h4>
                             </div>
                         </div>
                     </div>
@@ -95,14 +117,16 @@
     <div th:insert="~{blocks/footer :: footer}"></div>
 
     <!-- Js Plugins -->
-    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
-    <script th:src="@{/js/jquery.nice-select.min.js}"></script>
-    <script th:src="@{/js/jquery-ui.min.js}"></script>
-    <script th:src="@{/js/jquery.slicknav.js}"></script>
-    <script th:src="@{/js/owl.carousel.min.js}"></script>
-    <script th:src="@{/js/main.js}"></script>
+    <script src="/js/selectScript.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/jquery-ui-timepicker-addon.js"></script>
+    <script src="/js/jquery-ui-timepicker-addon.min.js"></script>
 </body>
 
 </html>

@@ -1,19 +1,20 @@
 package ru.wolves.bookingsite.controllers.mvc;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.wolves.bookingsite.models.Booking;
-import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.RoomHall;
 import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -29,18 +30,19 @@ public class RoomsController {
         this.bookingValidator = bookingValidator;
     }
 
-    // TODO
     @GetMapping
-    public String roomsPage(@RequestParam(value = "free_rooms",defaultValue = "false", required = false) Boolean b,
-                            Model model, HttpServletRequest request){
-        HttpSession session = request.getSession();
-        Booking booking = (Booking) session.getAttribute("booking_with_error");
-        if (b == true){
-            if(booking==null){
-                return "redirect:/rooms";
-            }
+    public String roomsPage(@RequestParam(required = false)
+                                @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) LocalDate date,
+                            @RequestParam(required = false)
+                                @DateTimeFormat(pattern = "HH:mm") Date timeStart,
+                            @RequestParam(required = false)
+                                @DateTimeFormat(pattern = "HH:mm") Date timeEnd,
+                            Model model){
+        if (date!=null && timeStart!=null && timeEnd!=null){
+            Booking booking = new Booking(date,timeStart,timeEnd);
             model.addAttribute("rooms", roomHallService.findFreeRooms(booking));
-            model.addAttribute("booking_with_error",booking);
+            model.addAttribute("free_rooms",true);
+            model.addAttribute("booking",booking);
             return "rooms";
         }
         List<RoomHall> rooms = roomHallService.findAllRoomHall();
