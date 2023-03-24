@@ -76,12 +76,12 @@
                             </div>
                             <div class="check-date">
                                 <label for="time-start">Начало:</label>
-                                <input type="text" class="date-input" id="time-start" required="required">
+                                <input type="text" class="date-input time-start" id="time-start" required="required">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="check-date">
                                 <label for="time-end">Конец:</label>
-                                <input type="text" class="date-input" id="time-end" required="required">
+                                <input type="text" class="date-input time-end" id="time-end" required="required">
                                 <i class="icon_calendar"></i>
                                 <div id="wrong-time-end-alert" class="alert alert-danger" style="display:none"></div>
                             </div>
@@ -99,17 +99,17 @@
     <div th:insert="~{blocks/footer :: footer}"></div>
 
     <!-- Js Plugins -->
-    <script th:src="@{/js/selectScript.js}"></script>
-    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
-    <script th:src="@{/js/jquery.nice-select.min.js}"></script>
-    <script th:src="@{/js/jquery-ui.min.js}"></script>
-    <script th:src="@{/js/jquery.slicknav.js}"></script>
-    <script th:src="@{/js/owl.carousel.min.js}"></script>
-    <script th:src="@{/js/main.js}"></script>
-    <script th:src="@{/js/jquery-ui-timepicker-addon.js}"></script>
-    <script th:src="@{/js/jquery-ui-timepicker-addon.min.js}"></script>
+    <script src="/js/selectScript.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/jquery-ui-timepicker-addon.js"></script>
+    <script src="/js/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" th:inline="javascript" th:if="${isSuccess}">
         $(window).on('load', function (e) {
             e.preventDefault();

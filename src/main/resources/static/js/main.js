@@ -8,7 +8,28 @@
 ---------------------------------------------------------  */
 
 'use strict';
-
+jQuery(function ($) {
+    $.datepicker.regional['ru'] = {
+        closeText: 'Закрыть',
+        prevText: '&#x3c;Пред',
+        nextText: 'След&#x3e;',
+        currentText: 'Сегодня',
+        monthNames: ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
+            'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'],
+        monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июня',
+            'Июля', 'Авг', 'Сен', 'Октября', 'Ноября', 'Декабря'],
+        dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+        dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        weekHeader: 'Нед',
+        dateFormat: 'dd.mm.yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ru']);
+});
 (function ($) {
 
     /*------------------
@@ -108,11 +129,11 @@
             altFormat: 'yy-mm-dd',
             altField: '#alt-date',
             required: true
-        })
+        });
     });
 
     $(function(){
-        $("#time-start").timepicker({
+        $(".time-start").timepicker({
             minTime: '8:30',
             maxTime: '22:00',
             hourMin: 8,
@@ -120,7 +141,7 @@
         })
     });
     $(function(){
-        $("#time-end").timepicker({
+        $(".time-end").timepicker({
             minTime: '8:30',
             maxTime: '22:00',
             hourMin: 8,
@@ -257,8 +278,7 @@ $(document).ready(function () {
 //AJAX SUBMIT
 function booking_ajax_submit() {
 
-    let date = $("#alt-date").val();
-    let place_id = $("#room").val();
+
     var bookingDTO = {}
     bookingDTO["date"] = $("#alt-date").val();
     bookingDTO["timeStart"] = $("#time-start").val();
@@ -284,7 +304,8 @@ function booking_ajax_submit() {
             $.each(e.responseJSON.errors, function (index, value) {
                 // Помещение занято
                 if(value.code=="424"){
-                    placeIsNotFree(place_id, date);
+                    placeIsNotFree(bookingDTO.placeId, bookingDTO.date,
+                                    bookingDTO.timeStart, bookingDTO.timeEnd);
                 }
                 // Неправильное время
                 if(value.code=="423"){
@@ -442,12 +463,12 @@ function admin_delete_ajax_submit(booking_id, btn_id) {
 }
 
 // Функции DRY
-function placeIsNotFree(place_id,date) {
+function placeIsNotFree(place_id,date,timeStart,timeEnd) {
     $("#place-not-free-alert").css({"display": "block"});
     $("#place-not-free-alert").append(
         "К сожалению данное помещение занято в это время" +
         "<a href='/object/free-date?roomHall=" + place_id+ "&date=" + date+"'> посмотреть свободные даты </a>" +
-        "или <a href='/rooms?free_rooms=true'> посмотреть свободные помещения в это время </a>"
+        "или <a href='/rooms?date="+date+"&timeStart="+timeStart+"&timeEnd="+timeEnd+"'>+ посмотреть свободные помещения в это время </a>"
     );
 }
 function wrongTimeEnd(msg){

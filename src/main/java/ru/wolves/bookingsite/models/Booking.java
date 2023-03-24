@@ -150,4 +150,14 @@ public class Booking {
         return Objects.hash(id, date, timeStart, timeEnd, bookedAt, customer, place);
     }
 
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", date=" + date +
+                ", timeStart=" + timeStart +
+                ", timeEnd=" + timeEnd +
+                ", bookedAt=" + bookedAt +
+                '}';
+    }
 }
