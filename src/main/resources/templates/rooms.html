@@ -49,16 +49,16 @@
                             <div class="rooms-form">
                                 <div class="rooms-inputs">
                                     <div class="check-date">
-                                        <input id="date-in" placeholder="Дата" required="required" onkeydown="return false;" autocomplete="off">
-                                        <input th:value="${date}" name="date" type="text"id="alt-date" required="required" hidden="hidden">
+                                        <input th:value="${booking!=null}?${#temporals.format(booking?.date, 'dd ')+#strings.capitalize(#temporals.format(booking?.date, 'MMMM, yyyy'))}:''" id="date-in" placeholder="Дата" required="required" onkeydown="return false;" autocomplete="off">
+                                        <input th:value="${#temporals.format(booking?.date, 'yyyy-MM-dd')}" name="date" type="text"id="alt-date" required="required" hidden="hidden">
                                         <i class="icon_calendar"></i>
                                     </div>
                                     <div class="check-date">
-                                        <input th:value="${timeStart}" placeholder="Начало" name="timeStart" type="text" class="date-input time-start" id="time-start" required="required">
+                                        <input th:value="${#dates.format(booking?.timeStart, 'HH:mm')}" placeholder="Начало" name="timeStart" type="text" class="date-input time-start" id="time-start" required="required">
                                         <i class="icon_calendar"></i>
                                     </div>
                                     <div class="check-date">
-                                        <input th:value="${timeEnd}" placeholder="Конец" name="timeEnd" type="text" class="date-input time-end" id="time-end" required="required">
+                                        <input th:value="${#dates.format(booking?.timeEnd, 'HH:mm')}" placeholder="Конец" name="timeEnd" type="text" class="date-input time-end" id="time-end" required="required">
                                         <i class="icon_calendar"></i>
                                         <div id="wrong-time-end-alert" class="alert alert-danger" style="display:none"></div>
                                     </div>
