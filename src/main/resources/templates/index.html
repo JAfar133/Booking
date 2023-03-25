@@ -60,7 +60,7 @@
                                 <select id="room">
                                     <option th:each="room : ${halls}" th:value="${room.id}" th:text="|${room.name} - ${room.address}"></option>
                                 </select>
-                                <div class="alert alert-danger" id="place-not-free-alert" style="display: none"></div>
+                                <div class="alert alert-danger place-not-free-alert" style="display: none"></div>
 
                             </div>
                             <!-- /person_details -->

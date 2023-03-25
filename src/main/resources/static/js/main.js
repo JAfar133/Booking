@@ -303,12 +303,12 @@ function booking_ajax_submit() {
             console.log("ERROR : ", e);
             $.each(e.responseJSON.errors, function (index, value) {
                 // Помещение занято
-                if(value.code=="424"){
+                if(value.field=="place"){
                     placeIsNotFree(bookingDTO.placeId, bookingDTO.date,
                                     bookingDTO.timeStart, bookingDTO.timeEnd);
                 }
                 // Неправильное время
-                if(value.code=="423"){
+                if(value.field=="timeEnd"){
                     wrongTimeEnd(value.msg);
                 }
             })
@@ -474,8 +474,8 @@ function admin_delete_ajax_submit(booking_id, btn_id) {
 
 // Функции DRY
 function placeIsNotFree(place_id,date,timeStart,timeEnd) {
-    $("#place-not-free-alert").css({"display": "block"});
-    $("#place-not-free-alert").append(
+    $(".place-not-free-alert").css({"display": "block"});
+    $(".place-not-free-alert").append(
         "К сожалению данное помещение занято в это время" +
         "<a href='/object/free-date?roomHall=" + place_id+ "&date=" + date+"'> посмотреть свободные даты </a>" +
         "или <a href='/rooms?date="+date+"&timeStart="+timeStart+"&timeEnd="+timeEnd+"'> посмотреть свободные помещения в это время </a>"
@@ -487,11 +487,11 @@ function wrongTimeEnd(msg){
 }
 function setDisplayNoneForErrorsAndClear(){
     $("#wrong-time-end-alert").css({"display":"none"});
-    $("#place-not-free-alert").css({"display":"none"});
+    $(".place-not-free-alert").css({"display":"none"});
     $("#phone-error-alert").css({"display":"none"});
 
     $("#wrong-time-end-alert").empty();
-    $("#place-not-free-alert").empty();
+    $(".place-not-free-alert").empty();
     $("#phone-error-alert").empty();
 }
 /*Errors code: {
