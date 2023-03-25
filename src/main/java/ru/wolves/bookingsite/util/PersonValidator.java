@@ -19,7 +19,7 @@ public class PersonValidator {
             msg.addError("432","structure","Поле Структура не может быть пустым");
         }
         Pattern pattern = Pattern.compile("\\+\\d{11}");
-        if(!Pattern.matches("\\+\\d{11}",person.getPhoneNumber())){
+        if(!Pattern.matches("^(\\+7|7|8)?[\\s\\-]?\\(?[489][0-9]{2}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$",person.getPhoneNumber())){
             msg.addError("433","phoneNumber","Номер телефона не валидный");
         }
     }

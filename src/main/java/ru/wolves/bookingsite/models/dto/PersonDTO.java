@@ -1,7 +1,5 @@
 package ru.wolves.bookingsite.models.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Pattern;
 
 public class PersonDTO {
@@ -15,7 +13,7 @@ public class PersonDTO {
 
     private String post;
 
-    @Pattern(regexp = "\\+\\d{11}", message = "Введите существующий номер")
+    @Pattern(regexp = "^(\\+7|7|8)?[\\s\\-]?\\(?[489][0-9]{2}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$", message = "Введите существующий номер")
     private String phoneNumber;
 
     private String institute;
