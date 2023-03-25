@@ -494,17 +494,17 @@ function setDisplayNoneForErrorsAndClear(){
     $(".place-not-free-alert").empty();
     $("#phone-error-alert").empty();
 }
-/*Errors code: {
+/*Errors code (field): {
         Пустые поля:[
-            420 - time-start,
-            421 - time-end,
-            422 - date,
-            431 - institute,
-            432 - structure
+            420 - time-start, (timeStart)
+            421 - time-end, (timeEnd)
+            422 - date, (date)
+            431 - institute, (institute)
+            432 - structure (structure)
             ]
         },
-        423 - time-end <= time-start,
-        424 - Помещение занято
+        423 - time-end <= time-start, (timeEnd)
+        424 - Помещение занято (place)
 */
 
 

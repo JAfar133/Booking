@@ -32,7 +32,7 @@ public class Person {
     private String post;
 
     @Column(name = "phone")
-    @Pattern(regexp = "\\+\\d{11}", message = "Номер введен неверно")
+    @Pattern(regexp = "^(\\+7|7|8)?[\\s\\-]?\\(?[489][0-9]{2}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$", message = "Номер введен неверно")
     private String phoneNumber;
     @Column(name = "institute")
     private String institute;
