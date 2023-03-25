@@ -58,25 +58,25 @@
 <!-- Admin Section Begin -->
 <section class="room-details-section spad">
   <div class="container">
-    <div class="card mb-4 border-primary" th:id="'booking-card'+${booking.id}" th:each="booking : ${bookings}">
+    <div class="card mb-4 border-primary" th:id="'booking-card'+${booking.id}" th:each="booking : ${bookings}"
+         th:with="timeStart=${#dates.format(booking?.timeStart, 'HH:mm')},
+                  timeEnd=${#dates.format(booking?.timeEnd, 'HH:mm')}">
       <div class="card-header" style="display: flex; justify-content: space-between">
-        <h5 th:text="${'Заказ № ' + booking.id}"/>
+        <h5 th:text="|Заказ № ${booking.id}|"/>
         <h5 th:text="${#dates.format(booking.bookedAt, 'dd-MM-yyyy, HH:mm')}"/>
       </div>
       <div class="card-body" >
-        <h5 style="font-weight: bold" class="card-title" th:text="${booking.place.name+', '+booking.place.address}"></h5>
+        <h5 style="font-weight: bold" class="card-title" th:text="|${booking.place.name}, ${booking.place.address}|"></h5>
         <div>
           <span><b>Дата бронирования:</b></span>
-          <span th:text="${'  '+#temporals.format(booking.date, 'dd MMMM yyyy')+',  '+booking.timeStart+'-'+booking.timeEnd}"/>
+          <span th:text="|  ${#temporals.format(booking.date, 'dd MMMM yyyy')},  ${timeStart}-${timeEnd}|"/>
         </div>
         <div>
           <span><b>Заказчик: </b></span>
           <span th:if="${booking.customer.post=='Студент'}"
-                th:text="${booking.customer.post+' '+booking.customer.course+' курсa '
-                +booking.customer.institute+' - '+booking.customer.lastNameAndInitials}"/>
+                th:text="|${booking.customer.post} ${booking.customer.course} курсa ${booking.customer.institute} - ${booking.customer.lastNameAndInitials}|"/>
           <span th:if="${booking.customer.post=='Работник'}"
-                th:text="${booking.customer.post+' '+booking.customer.structure+' '
-                +booking.customer.lastNameAndInitials}"/>
+                th:text="|${booking.customer.post} ${booking.customer.structure} ${booking.customer.lastNameAndInitials}"/>
         </div>
         <div>
           <span><b>Номер телефона: </b></span>

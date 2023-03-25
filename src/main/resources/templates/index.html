@@ -58,7 +58,7 @@
                             <div class="select-option">
                                 <label for="room">Помещение:</label>
                                 <select id="room">
-                                    <option th:each="room : ${halls}" th:value="${room.id}" th:text="${room.name+' - '+room.address}"></option>
+                                    <option th:each="room : ${halls}" th:value="${room.id}" th:text="|${room.name} - ${room.address}"></option>
                                 </select>
                                 <div class="alert alert-danger" id="place-not-free-alert" style="display: none"></div>
 

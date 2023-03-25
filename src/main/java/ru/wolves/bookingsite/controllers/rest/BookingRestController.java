@@ -1,12 +1,10 @@
 package ru.wolves.bookingsite.controllers.rest;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.dto.JsonResultMessageDTO;
@@ -18,6 +16,9 @@ import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
 import ru.wolves.bookingsite.util.PersonValidator;
 
+import java.util.Map;
+
+
 @RestController
 @RequestMapping("/api")
 public class BookingRestController {
@@ -26,75 +27,81 @@ public class BookingRestController {
     private final BookingValidator bookingValidator;
     private final PersonValidator personValidator;
     private final RoomHallServiceImpl roomHallService;
+    private final ObjectMapper objectMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public BookingRestController(BookingServiceImpl bookingService, BookingValidator bookingValidator, PersonValidator personValidator, RoomHallServiceImpl roomHallService) {
+    public BookingRestController(BookingServiceImpl bookingService, BookingValidator bookingValidator,
+                                 PersonValidator personValidator, RoomHallServiceImpl roomHallService,
+                                 ObjectMapper objectMapper, ModelMapper modelMapper) {
         this.bookingService = bookingService;
         this.bookingValidator = bookingValidator;
         this.personValidator = personValidator;
         this.roomHallService = roomHallService;
+        this.objectMapper = objectMapper;
+        this.modelMapper = modelMapper;
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     @PostMapping
     public ResponseEntity<?> validBookingAndAddToSession(
-            @Valid @RequestBody BookingDTO bookingDTO, Errors errors, HttpServletRequest request){
+            @RequestBody BookingDTO bookingDTO){
         Booking booking = convertToBooking(bookingDTO);
         booking.setPlace(roomHallService.findRoom(bookingDTO.getPlaceId()));
-        booking.setId(null);
-        HttpSession session = request.getSession();
         JsonResultMessageDTO result = new JsonResultMessageDTO();
 
         bookingValidator.validate(booking, result);
-        if(errors.hasErrors() || result.hasErrors()){
-            return getErrorResponse(result, errors);
+        if(result.hasErrors()){
+            return getErrorResponse(result);
         }
 
-
-        session.setAttribute("booking",booking);
-        result.setMsg("Success");
+        result.setMsg("Booking is valid");
+        result.setObject(convertToBookingDTO(booking));
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/booking")
     public ResponseEntity<?> saveBookingWithPersonDetails(
-            @Valid @RequestBody PersonDTO personDTO, Errors errors, HttpServletRequest request){
-        Person person = convertToPerson(personDTO);
+            @RequestBody Map<String, Object> requestBody) {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
-        HttpSession session = request.getSession();
-        Booking booking = (Booking) session.getAttribute("booking");
 
-        if(booking!=null) {
-            bookingValidator.validate(booking, result);
-            personValidator.validate(person, result);
-        }
-        if(errors.hasErrors() || result.hasErrors()){
-            return getErrorResponse(result, errors);
+        Booking booking = convertToBooking(objectMapper.convertValue(
+                requestBody.get("bookingDTO"), BookingDTO.class));
+        Person person = convertToPerson(objectMapper.convertValue(
+                requestBody.get("personDTO"), PersonDTO.class));
+
+        bookingValidator.validate(booking, result);
+        personValidator.validate(person, result);
+
+        if(result.hasErrors()){
+            return getErrorResponse(result);
         }
 
-        booking.setComment(personDTO.getComment());
         bookingService.savePersonWithBooking(person,booking);
 
-        session.removeAttribute("booking");
-        result.setMsg("Success");
+        result.setObject(convertToBookingDTO(booking));
+        result.setMsg("Booking saved");
+
         return ResponseEntity.ok(result);
     }
 
-    private ResponseEntity<?> getErrorResponse(JsonResultMessageDTO result, Errors errors){
+    private ResponseEntity<?> getErrorResponse(JsonResultMessageDTO result){
         result.setMsg("Error");
-        errors.getAllErrors().stream()
-                .forEach(x-> result
-                        .addError(
-                                x.getCode(),
-                                errors.getFieldError().getField(),
-                                x.getDefaultMessage()));
         return ResponseEntity.badRequest().body(result);
     }
+
+
+
     private Person convertToPerson(PersonDTO personDTO){
-        ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(personDTO,Person.class);
     }
+    private PersonDTO convertToPersonDTO(Person person){
+        return modelMapper.map(person,PersonDTO.class);
+    }
     private Booking convertToBooking(BookingDTO bookingDTO){
-        ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(bookingDTO,Booking.class);
+    }
+    private BookingDTO convertToBookingDTO(Booking booking){
+        return modelMapper.map(booking,BookingDTO.class);
     }
 }

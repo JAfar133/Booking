@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.dto.JsonResultMessageDTO;
 
+import java.util.regex.Pattern;
+
 @Component
 public class PersonValidator {
 
@@ -15,6 +17,10 @@ public class PersonValidator {
         }
         if(person.getPost().equals("Работник") && (person.getStructure()==null || person.getStructure().isEmpty())){
             msg.addError("432","structure","Поле Структура не может быть пустым");
+        }
+        Pattern pattern = Pattern.compile("\\+\\d{11}");
+        if(!Pattern.matches("\\+\\d{11}",person.getPhoneNumber())){
+            msg.addError("433","phoneNumber","Номер телефона не валидный");
         }
     }
 }

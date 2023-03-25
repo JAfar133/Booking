@@ -6,6 +6,7 @@ import java.util.Set;
 public class JsonResultMessageDTO {
     private String msg;
     private Set<CustomError> errors;
+    private Object object;
 
     public JsonResultMessageDTO() {
         errors = new HashSet<>();
@@ -13,6 +14,13 @@ public class JsonResultMessageDTO {
 
     public String getMsg() {
         return msg;
+    }
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
     }
 
     public void setMsg(String msg) {

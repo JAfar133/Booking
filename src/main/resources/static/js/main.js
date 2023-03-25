@@ -318,6 +318,7 @@ function booking_ajax_submit() {
 }
 
 function person_ajax_submit() {
+    var bookingDTO = {}
     var personDTO = {}
     personDTO["lastName"] = $("#last_name").val();
     personDTO["firstName"] = $("#first_name").val();
@@ -327,14 +328,19 @@ function person_ajax_submit() {
     personDTO["institute"] = $("#institute").val();
     personDTO["course"] = $("#course").val();
     personDTO["structure"] = $("#structure").val();
-    personDTO["comment"] = $("#comment").val();
+
+    bookingDTO["date"] = $("#alt-date").val();
+    bookingDTO["timeStart"] = $("#time-start").val();
+    bookingDTO["timeEnd"] = $("#time-end").val();
+    bookingDTO["placeId"] = $("#room").val();
+    bookingDTO["comment"] = $("#comment").val();
 
     $("#person-details-submit-btn").prop("disabled", true);
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/api/booking",
-        data: JSON.stringify(personDTO),
+        data: JSON.stringify({personDTO, bookingDTO}),
         dataType: 'json',
         cache: false,
         timeout: 600000,
@@ -352,6 +358,10 @@ function person_ajax_submit() {
                 if(value.field=="phoneNumber"){
                     $('#phone-error-alert').css({"display":"block"});
                     $('#phone-error-alert').append(value.msg);
+                }
+                if(value.field=="place"){
+                    placeIsNotFree(bookingDTO.placeId, bookingDTO.date,
+                        bookingDTO.timeStart, bookingDTO.timeEnd);
                 }
 
             })
@@ -468,7 +478,7 @@ function placeIsNotFree(place_id,date,timeStart,timeEnd) {
     $("#place-not-free-alert").append(
         "К сожалению данное помещение занято в это время" +
         "<a href='/object/free-date?roomHall=" + place_id+ "&date=" + date+"'> посмотреть свободные даты </a>" +
-        "или <a href='/rooms?date="+date+"&timeStart="+timeStart+"&timeEnd="+timeEnd+"'>+ посмотреть свободные помещения в это время </a>"
+        "или <a href='/rooms?date="+date+"&timeStart="+timeStart+"&timeEnd="+timeEnd+"'> посмотреть свободные помещения в это время </a>"
     );
 }
 function wrongTimeEnd(msg){

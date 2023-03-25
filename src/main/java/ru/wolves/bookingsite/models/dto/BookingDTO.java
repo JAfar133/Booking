@@ -1,6 +1,8 @@
 package ru.wolves.bookingsite.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.wolves.bookingsite.models.Person;
@@ -11,6 +13,7 @@ import java.util.Date;
 
 public class BookingDTO {
 
+    private Long id;
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
@@ -23,6 +26,35 @@ public class BookingDTO {
     private Date timeEnd;
 
     private Long placeId;
+    private PersonDTO customer;
+    private String comment;
+
+    public BookingDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public PersonDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(PersonDTO customer) {
+        this.customer = customer;
+    }
 
     public LocalDate getDate() {
         return date;

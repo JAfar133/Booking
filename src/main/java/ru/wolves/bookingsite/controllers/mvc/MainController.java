@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 
 @Controller
-public class FormController {
+public class MainController {
     private final RoomHallServiceImpl roomHallServiceImpl;
 
 
     @Autowired
-    public FormController(RoomHallServiceImpl roomHallServiceImpl) {
+    public MainController(RoomHallServiceImpl roomHallServiceImpl) {
         this.roomHallServiceImpl = roomHallServiceImpl;
 
     }
     @GetMapping("/")
-    public String placeForm(Model model){
+    public String mainPage(Model model){
         model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
         return "index";
     }

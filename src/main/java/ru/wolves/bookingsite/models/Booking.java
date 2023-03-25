@@ -2,7 +2,6 @@ package ru.wolves.bookingsite.models;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -14,11 +13,9 @@ import java.util.Objects;
 public class Booking {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     private LocalDate date;
@@ -44,10 +41,8 @@ public class Booking {
     @JoinColumn(name = "roomhall_id", referencedColumnName = "id")
     private RoomHall place;
 
-    @Column(name = "comment")
     private String comment;
 
-    @Column(name = "confirmed")
     private boolean confirmed;
 
 

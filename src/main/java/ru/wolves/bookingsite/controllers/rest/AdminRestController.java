@@ -26,40 +26,31 @@ public class AdminRestController {
     }
 
     @PatchMapping("/booking/{id}")
-    public ResponseEntity<?> confirmed(@PathVariable("id") Long id){
+    public ResponseEntity<?> confirm(@PathVariable("id") Long id) throws BookingNotFoundException {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
-        try {
-            Booking booking = bookingService.findBooking(id);
-            booking.setConfirmed(true);
-            bookingService.updateBooking(booking);
-            result.setMsg("Success");
-            return ResponseEntity.ok(result);
-        }catch (BookingNotFoundException e){
-            return exceptionResponse(result,e);
-        }
+
+        Booking booking = bookingService.findBooking(id);
+        booking.setConfirmed(true);
+        bookingService.updateBooking(booking);
+        result.setMsg("Success");
+        return ResponseEntity.ok(result);
     }
     @DeleteMapping("/booking/{id}")
-    public ResponseEntity<?> reject(@PathVariable("id") Long id){
+    public ResponseEntity<?> reject(@PathVariable("id") Long id) throws BookingNotFoundException {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
-        try {
-            bookingService.deleteBooking(id);
-            result.setMsg("Success");
-            return ResponseEntity.ok(result);
-        } catch (BookingNotFoundException e) {
-            return exceptionResponse(result,e);
-        }
+
+        bookingService.deleteBooking(id);
+        result.setMsg("Success");
+        return ResponseEntity.ok(result);
+
     }
 
     @PatchMapping("/change-date/{id}")
     public ResponseEntity<?> updateDate(@PathVariable("id") Long id,
-                             @RequestBody BookingDTO booking, Model model){
+                             @RequestBody BookingDTO booking, Model model) throws BookingNotFoundException {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
-        Booking booking1;
-        try {
-            booking1 = bookingService.findBooking(id);
-        } catch (BookingNotFoundException e) {
-            return exceptionResponse(result,e);
-        }
+        Booking booking1 = bookingService.findBooking(id);
+
         bookingValidator.validate(convertToBooking(booking), result);
         if(result.hasErrors()){
             result.setMsg("Error");
@@ -68,7 +59,6 @@ public class AdminRestController {
         booking1.setDate(booking.getDate());
         booking1.setTimeStart(booking.getTimeStart());
         booking1.setTimeEnd(booking.getTimeEnd());
-
         booking1.setConfirmed(true);
         bookingService.updateBooking(booking1);
 
@@ -77,8 +67,9 @@ public class AdminRestController {
         return ResponseEntity.ok(result);
     }
 
-    private ResponseEntity<?> exceptionResponse(JsonResultMessageDTO result,
-                                                BookingNotFoundException e){
+    @ExceptionHandler
+    private ResponseEntity<?> handle(BookingNotFoundException e){
+        JsonResultMessageDTO result = new JsonResultMessageDTO();
         result.setMsg("Error");
         result.addError("","id",e.getMessage());
         return ResponseEntity.badRequest().body(result);

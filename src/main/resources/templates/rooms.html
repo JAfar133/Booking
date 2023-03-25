@@ -41,24 +41,28 @@
     
     <section class="rooms-section spad">
         <!-- If user looking for free room on this dates-->
-        <div class="breadcrumb-section">
+        <div class="breadcrumb-section"
+             th:with="date=${booking!=null}?|${#temporals.format(booking?.date, 'dd')} ${#strings.capitalize(#temporals.format(booking?.date, 'MMMM, yyyy'))}|:'',
+                      altDate=${#temporals.format(booking?.date, 'yyyy-MM-dd')},
+                      timeStart=${#dates.format(booking?.timeStart, 'HH:mm')},
+                      timeEnd=${#dates.format(booking?.timeEnd, 'HH:mm')}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <form th:method="get" th:action="@{/rooms}" id="free-rooms-form">
-                            <div class="rooms-form">
+                            <div class="rooms-form" >
                                 <div class="rooms-inputs">
                                     <div class="check-date">
-                                        <input th:value="${booking!=null}?${#temporals.format(booking?.date, 'dd ')+#strings.capitalize(#temporals.format(booking?.date, 'MMMM, yyyy'))}:''" id="date-in" placeholder="Дата" required="required" onkeydown="return false;" autocomplete="off">
-                                        <input th:value="${#temporals.format(booking?.date, 'yyyy-MM-dd')}" name="date" type="text"id="alt-date" required="required" hidden="hidden">
+                                        <input th:value="${date}" id="date-in" placeholder="Дата" required="required" onkeydown="return false;" autocomplete="off">
+                                        <input th:value="${altDate}" name="date" type="text"id="alt-date" required="required" hidden="hidden">
                                         <i class="icon_calendar"></i>
                                     </div>
                                     <div class="check-date">
-                                        <input th:value="${#dates.format(booking?.timeStart, 'HH:mm')}" placeholder="Начало" name="timeStart" type="text" class="date-input time-start" id="time-start" required="required">
+                                        <input th:value="${timeStart}" placeholder="Начало" name="timeStart" type="text" class="date-input time-start" id="time-start" required="required">
                                         <i class="icon_calendar"></i>
                                     </div>
                                     <div class="check-date">
-                                        <input th:value="${#dates.format(booking?.timeEnd, 'HH:mm')}" placeholder="Конец" name="timeEnd" type="text" class="date-input time-end" id="time-end" required="required">
+                                        <input th:value="${timeEnd}" placeholder="Конец" name="timeEnd" type="text" class="date-input time-end" id="time-end" required="required">
                                         <i class="icon_calendar"></i>
                                         <div id="wrong-time-end-alert" class="alert alert-danger" style="display:none"></div>
                                     </div>
@@ -70,9 +74,7 @@
                         </form>
                         <div class="breadcrumb-text">
                             <div class="bt-option" th:if="${free_rooms}">
-                                <h4 style="color:#000 " th:text="${'Свободные помещения на '
-                                +#temporals.format(booking.date, 'dd MMMM yyyy') + ' - ' + booking.timeStart+
-                                '-'+booking.timeEnd}"></h4>
+                                <h4 style="color:#000 " th:text="| Свободные помещения на ${date} (${timeStart}-${timeEnd}) |"></h4>
                             </div>
                         </div>
                     </div>
@@ -88,7 +90,7 @@
                     <div class="room-item">
                         <img th:src="@{/img/room/room-1.jpg}" alt="">
                         <div class="ri-text">
-                            <h4 th:text="${room.name+', ' + room.address}"></h4>
+                            <h4 th:text="|${room.name}, ${room.address}|"></h4>
                             <table>
                                 <tbody>
                                     <tr>

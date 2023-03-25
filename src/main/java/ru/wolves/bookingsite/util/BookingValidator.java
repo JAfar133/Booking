@@ -36,13 +36,13 @@ public class BookingValidator {
     private void placeIsNotFree(Booking booking, JsonResultMessageDTO msg){
         bookingServiceImpl.findAllByRoomHall(booking.getPlace()).forEach(booking1 -> {
             if (booking1.getDate().equals(booking.getDate()) && !booking.equals(booking1)) {
-                if(booking1.getTimeStart().getTime() <= booking.getTimeStart().getTime()) {
-                    if (booking1.getTimeEnd().getTime() > booking.getTimeStart().getTime()) {
+                if(booking1.getTimeStart().before(booking.getTimeStart())) {
+                    if (booking1.getTimeEnd().after(booking.getTimeStart())) {
                         msg.addError("424","place","Помещение занято в это время");
                         return;
                     }
                 } else {
-                    if(booking.getTimeEnd().getTime() > booking1.getTimeStart().getTime())
+                    if(booking.getTimeEnd().after(booking1.getTimeStart())  )
                         msg.addError("424","place","Помещение занято в это время");
                         return;
                 }

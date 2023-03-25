@@ -1,9 +1,12 @@
 package ru.wolves.bookingsite.models.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Pattern;
 
 public class PersonDTO {
 
+    private Long id;
     private String firstName;
 
     private String lastName;
@@ -21,15 +24,17 @@ public class PersonDTO {
 
     private String structure;
 
-    private String comment;
-
-    public String getComment() {
-        return comment;
+    public PersonDTO() {
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public Long getId() {
+        return id;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public String getFirstName() {
         return firstName;

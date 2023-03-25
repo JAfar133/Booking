@@ -46,8 +46,8 @@ public class BookingServiceImpl implements BookingService {
     public Booking findBooking(Long id) throws BookingNotFoundException {
         Optional<Booking> booking = bookingRepo.findById(id);
         if(booking.isPresent())
-            return booking.get();
-        else throw new BookingNotFoundException("Бронь с таким id не существует");
+            throw new BookingNotFoundException("Бронь с таким id не существует");
+        return booking.get();
     }
 
     @Transactional
@@ -91,12 +91,12 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void deleteBooking(Long id) throws BookingNotFoundException {
         Booking booking = findBooking(id);
-        if(booking!=null){
-            Person person = findBooking(id).getCustomer();
-            bookingRepo.delete(findBooking(id));
-            personRepo.delete(person);
+        if(booking==null){
+            throw new BookingNotFoundException("Бронь с таким id не существует");
         }
-        else throw new BookingNotFoundException("Бронь с таким id не существует");
+        Person person = findBooking(id).getCustomer();
+        bookingRepo.delete(findBooking(id));
+        personRepo.delete(person);
 
     }
 

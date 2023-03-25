@@ -8,23 +8,27 @@
             <h5 class="modal-title" id="exampleModalLabel">Измените дату</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body" th:id="'modal'+${booking.id}">
+          <div class="modal-body" th:id="'modal'+${booking.id}"
+               th:with="date=${booking!=null}?|${#temporals.format(booking?.date, 'dd')} ${#strings.capitalize(#temporals.format(booking?.date, 'MMMM, yyyy'))}|:'',
+                        altDate=${#temporals.format(booking?.date, 'yyyy-MM-dd')},
+                        timeStart=${#dates.format(booking?.timeStart, 'HH:mm')},
+                        timeEnd=${#dates.format(booking?.timeEnd, 'HH:mm')}">
               <div class="check-date">
                 <label th:for="'date-in'+${booking.id}">Дата:</label>
                 <input style="text-transform: uppercase"
-                       th:value="${#temporals.format(booking.date, 'dd MMMM, yyyy')}" type="text" class="date-input" th:id="'date-in'+${booking.id}" required="required" autocomplete="off" onkeydown="return false;" >
-                <input th:value="${#temporals.format(booking.date, 'yyyy-MM-dd')}" th:name="date"
+                       th:value="${date}" type="text" class="date-input" th:id="'date-in'+${booking.id}" required="required" autocomplete="off" onkeydown="return false;" >
+                <input th:value="${altDate}" th:name="date"
                        type="text" th:id="'alt-date'+${booking.id}" required="required" hidden="hidden">
               </div>
               <div class="check-date">
                 <label th:for="'time-start'+${booking.id}">Начало:</label>
-                <input th:value="${#dates.format(booking.timeStart, 'HH:mm')}" th:name="timeStart"
+                <input th:value="${timeStart}" th:name="timeStart"
                        type="text" class="date-input" th:id="'time-start'+${booking.id}" required="required">
 
               </div>
               <div class="check-date">
                 <label th:for="'time-end'+${booking.id}">Конец:</label>
-                <input th:value="${#dates.format(booking.timeEnd, 'HH:mm')}" th:name="timeEnd"
+                <input th:value="${timeEnd}" th:name="timeEnd"
                        type="text" class="date-input" th:id="'time-end'+${booking.id}" required="required">
 
                 <div th:id="'wrong-time-end-alert'+${booking.id}" class="alert alert-danger" style="display:none"></div>

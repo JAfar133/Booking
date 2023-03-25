@@ -52,7 +52,7 @@ public class RoomsController {
         return "rooms";
     }
     @GetMapping("/{engName}")
-    public String roomPage(@PathVariable("engName") String engName, Model model){
+    public String roomDetailsPage(@PathVariable("engName") String engName, Model model){
         RoomHall room = roomHallService.findByEngName(engName);
         model.addAttribute("room",room);
         return "room-details";
