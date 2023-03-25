@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.wolves.bookingsite.exceptions.BookingNotFoundException;
 import ru.wolves.bookingsite.models.Booking;
+import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.dto.BookingDTO;
 import ru.wolves.bookingsite.models.dto.JsonResultMessageDTO;
+import ru.wolves.bookingsite.models.dto.PersonDTO;
 import ru.wolves.bookingsite.services.impl.BookingServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
 
@@ -78,5 +80,6 @@ public class AdminRestController {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(bookingDTO,Booking.class);
     }
+
 
 }

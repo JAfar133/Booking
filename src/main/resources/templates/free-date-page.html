@@ -47,12 +47,21 @@
                 <div class="select-option">
                     <label for="room">Помещение:</label>
                     <select name="roomHall" id="room" th:value="${roomHall}">
-                        <option th:each="room : ${halls}" th:value="${room.id}" th:text="|${room.name}-${room.address}|"></option>
+                        <option th:each="room : ${halls}"
+                                th:value="${room.id}"
+                                th:text="|${room.name}-${room.address}|"
+                                th:selected="${room.id==roomHall.id}"
+                        ></option>
                     </select>
                 </div>
                 <div class="check-date">
                     <label for="date-in">Дата:</label>
-                    <input th:value="|${#temporals.format(date, 'dd')} ${#strings.capitalize(#temporals.format(date, 'MMMM, yyyy'))}|" type="text" id="date-in" required="required" onkeydown="return false;" autocomplete="off">
+                    <input th:value="|${#temporals.format(date, 'dd')} ${#strings.capitalize(#temporals.format(date, 'MMMM, yyyy'))}|"
+                           type="text"
+                           id="date-in"
+                           required="required"
+                           onkeydown="return false;"
+                           autocomplete="off">
                     <input name="date" th:value="${date}" type="text" id="alt-date" required="required" hidden="hidden">
                     <i class="icon_calendar"></i>
                 </div>
