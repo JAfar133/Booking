@@ -1,6 +1,9 @@
 package ru.wolves.bookingsite.services.impl;
 
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,14 +23,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Service
 @Transactional(readOnly = true)
 public class BookingServiceImpl implements BookingService {
     private final BookingRepo bookingRepo;
     private final PersonRepo personRepo;
-    static final Logger LOGGER = Logger.getLogger(BookingServiceImpl.class.getName());
+    static final Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
 
     @Autowired
     public BookingServiceImpl(BookingRepo bookingRepo, PersonRepo personRepo) {
@@ -60,7 +62,7 @@ public class BookingServiceImpl implements BookingService {
         personRepo.save(person);
         person.getBookingList().add(booking);
         booking.setCustomer(person);
-        bookingRepo.save(booking);
+        saveBooking(booking);
     }
 
     private String getLastNameInitials(Person person){
@@ -99,18 +101,19 @@ public class BookingServiceImpl implements BookingService {
         personRepo.delete(person);
 
     }
+    //
 
     @Override
     @Scheduled(cron="0 0 3 * * ?") // Каждый день в 3:00
     @Transactional
     public void deleteOldBooking() {
-        LOGGER.info(LocalDateTime.now()+": Start scanning old booking...");
+        log.info(LocalDateTime.now()+": Start scanning old booking...");
         LocalDate today = LocalDate.now();
         findAllBooking().stream().forEach(x-> {
             LocalDate date = x.getDate();
             if(date.isBefore(today)) {
                 deleteBooking(x);
-                LOGGER.warning("Booking deleted: "+x);
+                log.debug("Booking deleted: "+x);
             }
 
         });

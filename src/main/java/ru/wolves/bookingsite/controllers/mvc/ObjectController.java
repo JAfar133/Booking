@@ -31,10 +31,9 @@ public class ObjectController {
                                @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) LocalDate date,
                                @RequestParam(required = false) RoomHall roomHall,
                                Model model){
-        if(date==null||roomHall==null) {
-            date = LocalDate.now();
-            roomHall = roomHallService.findRoom(1L);
-        }
+        date = date != null ? date : LocalDate.now();
+        roomHall = roomHall != null ? roomHall : roomHallService.findRoom(1L);
+
         var bookings = bookingService.findAllBookingWithPlaceAndDate(roomHall,date);
         model.addAttribute("bookings", bookings.isEmpty() ? null : bookings);
         model.addAttribute("date",date);
