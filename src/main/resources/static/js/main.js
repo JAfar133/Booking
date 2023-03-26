@@ -152,6 +152,18 @@ jQuery(function ($) {
 		Nice Select
 	--------------------*/
     $("select").niceSelect();
+    if($(window).width() < 991) {
+        $(".nice-select span").css({"font-size": "14pt"})
+    };
+    if($(window).width() < 767) {
+        $(".nice-select span").css({"font-size": "12pt"})
+    };
+    if($(window).width() < 479) {
+        $(".nice-select span").css({"font-size": "9pt"})
+    };
+    if($(window).width() < 390) {
+        $(".nice-select span").css({"font-size": "7.5pt"})
+    };
 
 })(jQuery);
 function datetimepick(date_id,timeStart_id,timeEnd_id,altDate_id) {

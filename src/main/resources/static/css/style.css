@@ -2187,6 +2187,9 @@ ul, ol {
 	.hero-text h1 {
 		font-size: 50px;
 	}
+	.nice-select {
+		font-size: 14pt;
+	}
 	.top-nav {
 		display: none;
 	}
@@ -2468,6 +2471,9 @@ ul, ol {
 	.testimonial-slider.owl-carousel .owl-nav {
 		display: none;
 	}
+	.nice-select {
+		font-size: 12pt;
+	}
 	.rooms-inputs {
 		width: 100%;
 		display: flex;
@@ -2522,6 +2528,9 @@ ul, ol {
 	.footer-section .copyright-option ul li {
 		margin-bottom: 5px;
 	}
+	.nice-select {
+		font-size: 9pt;
+	}
 	.video-section {
 		padding-top: 80px;
 	}
@@ -2555,5 +2564,10 @@ ul, ol {
 	}
 	.blog-details-text .comment-option .single-comment-item .sc-text a {
 		margin-bottom: 10px;
+	}
+}
+@media only screen and (max-width: 390px) {
+	.nice-select {
+		font-size: 7.5pt;
 	}
 }
