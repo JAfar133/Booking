@@ -93,7 +93,9 @@ ul, ol {
 /*---------------------
   Helper CSS
 -----------------------*/
-
+.free-date-helper {
+	width: 200px;
+}
 .section-title {
 	text-align: center;
 	margin-bottom: 22px;
@@ -2187,7 +2189,10 @@ ul, ol {
 	.hero-text h1 {
 		font-size: 50px;
 	}
-	.nice-select {
+	.card-footer input {
+		font-size: 10pt;
+	}
+	.nice-select, input[type="text"] {
 		font-size: 14pt;
 	}
 	.top-nav {
@@ -2471,7 +2476,7 @@ ul, ol {
 	.testimonial-slider.owl-carousel .owl-nav {
 		display: none;
 	}
-	.nice-select {
+	.nice-select, #date-in, #time-start, #time-end {
 		font-size: 12pt;
 	}
 	.rooms-inputs {
@@ -2528,7 +2533,7 @@ ul, ol {
 	.footer-section .copyright-option ul li {
 		margin-bottom: 5px;
 	}
-	.nice-select {
+	.nice-select, #date-in, #time-start, #time-end{
 		font-size: 9pt;
 	}
 	.video-section {
@@ -2567,7 +2572,7 @@ ul, ol {
 	}
 }
 @media only screen and (max-width: 390px) {
-	.nice-select {
+	.nice-select, #date-in, #time-start, #time-end {
 		font-size: 7.5pt;
 	}
 }

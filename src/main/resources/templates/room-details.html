@@ -124,6 +124,8 @@
         function init(){
             let lat = /*[[${room.lat}]]*/;
             let lon = /*[[${room.lon}]]*/;
+            let name = /*[[${room.name}]]*/;
+            let name_address = /*[[${room.name+', '+room.address}]]*/;
             //44.597365, 33.519790
             console.log(lat+" "+lon)
             myMap = new ymaps.Map ("map", {
@@ -131,13 +133,15 @@
                 zoom: 16
             });
             myPlacemark = new ymaps.Placemark([lat, lon], {
+                hintContent: name,
+                balloonContent: name_address
             },{
                 // Опции.
                 // Необходимо указать данный тип макета.
                 iconLayout: 'default#image',
                 // Своё изображение иконки метки.
                 iconImageHref: '/icon/wing2.png',
-                iconImageSize: [60, 70],
+                iconImageSize: [60, 70]
             });
             myMap.geoObjects.add(myPlacemark);
         }
