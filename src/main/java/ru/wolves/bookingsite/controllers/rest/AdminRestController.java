@@ -7,10 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.wolves.bookingsite.exceptions.BookingNotFoundException;
 import ru.wolves.bookingsite.models.Booking;
-import ru.wolves.bookingsite.models.Person;
 import ru.wolves.bookingsite.models.dto.BookingDTO;
 import ru.wolves.bookingsite.models.dto.JsonResultMessageDTO;
-import ru.wolves.bookingsite.models.dto.PersonDTO;
 import ru.wolves.bookingsite.services.impl.BookingServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
 
@@ -34,7 +32,8 @@ public class AdminRestController {
         Booking booking = bookingService.findBooking(id);
         booking.setConfirmed(true);
         bookingService.updateBooking(booking);
-        result.setMsg("Success");
+        result.setMsg("Successfully confirmed booking with id " + id);
+        result.setObject(convertToBookingDTO(booking));
         return ResponseEntity.ok(result);
     }
     @DeleteMapping("/booking/{id}")
@@ -42,29 +41,30 @@ public class AdminRestController {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
 
         bookingService.deleteBooking(id);
-        result.setMsg("Success");
+        result.setMsg("Successfully deleted booking with id " + id);
         return ResponseEntity.ok(result);
 
     }
 
     @PatchMapping("/change-date/{id}")
     public ResponseEntity<?> updateDate(@PathVariable("id") Long id,
-                             @RequestBody BookingDTO booking, Model model) throws BookingNotFoundException {
+                             @RequestBody BookingDTO bookingDTO, Model model) throws BookingNotFoundException {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
-        Booking booking1 = bookingService.findBooking(id);
+        Booking booking = bookingService.findBooking(id);
 
-        bookingValidator.validate(convertToBooking(booking), result);
+        bookingValidator.validate(convertToBooking(bookingDTO), result);
         if(result.hasErrors()){
             result.setMsg("Error");
             return ResponseEntity.badRequest().body(result);
         }
-        booking1.setDate(booking.getDate());
-        booking1.setTimeStart(booking.getTimeStart());
-        booking1.setTimeEnd(booking.getTimeEnd());
-        booking1.setConfirmed(true);
-        bookingService.updateBooking(booking1);
+        booking.setDate(bookingDTO.getDate());
+        booking.setTimeStart(bookingDTO.getTimeStart());
+        booking.setTimeEnd(bookingDTO.getTimeEnd());
+        booking.setConfirmed(true);
+        bookingService.updateBooking(booking);
 
-        result.setMsg("Success");
+        result.setMsg("Successfully updated booking with id " + id);
+        result.setObject(convertToBookingDTO(booking));
         model.addAttribute("bookings",bookingService.findAllUnConfirmedBooking());
         return ResponseEntity.ok(result);
     }
@@ -79,6 +79,10 @@ public class AdminRestController {
     private Booking convertToBooking(BookingDTO bookingDTO){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(bookingDTO,Booking.class);
+    }
+    private BookingDTO convertToBookingDTO(Booking booking){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(booking,BookingDTO.class);
     }
 
 

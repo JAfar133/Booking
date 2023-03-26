@@ -11,10 +11,10 @@ public interface BookingService {
     List<Booking> findAllBooking();
     Booking findBooking(Long id) throws BookingNotFoundException;
     void saveBooking(Booking booking);
-    void deleteBooking(Booking booking);
+    void deleteBooking(Booking booking) throws BookingNotFoundException;
     void deleteBooking(Long id) throws BookingNotFoundException;
     void deleteOldBooking();
-    Booking updateBooking(Booking booking);
+    Booking updateBooking(Booking booking) throws BookingNotFoundException;
     List<Booking> findAllUnConfirmedBooking();
     List<Booking> findAllConfirmedBooking();
     List<Booking> findAllBookingWithPlaceAndDate(RoomHall roomHall, LocalDate date);

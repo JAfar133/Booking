@@ -28,6 +28,7 @@ public class BookingDTO {
     private Long placeId;
     private PersonDTO customer;
     private String comment;
+    private boolean confirmed;
 
     public BookingDTO() {
     }
@@ -86,5 +87,13 @@ public class BookingDTO {
 
     public void setPlaceId(Long placeId) {
         this.placeId = placeId;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
     }
 }

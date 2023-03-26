@@ -47,7 +47,7 @@ public class BookingServiceImpl implements BookingService {
 
     public Booking findBooking(Long id) throws BookingNotFoundException {
         Optional<Booking> booking = bookingRepo.findById(id);
-        if(booking.isPresent())
+        if(!booking.isPresent())
             throw new BookingNotFoundException("Бронь с таким id не существует");
         return booking.get();
     }
@@ -63,6 +63,7 @@ public class BookingServiceImpl implements BookingService {
         person.getBookingList().add(booking);
         booking.setCustomer(person);
         saveBooking(booking);
+        log.info("Booking with id = "+booking.getId()+" was saved successfully");
     }
 
     private String getLastNameInitials(Person person){
@@ -78,15 +79,17 @@ public class BookingServiceImpl implements BookingService {
     }
     @Transactional
     public void saveBooking(Booking booking){
-            bookingRepo.save(booking);
+        bookingRepo.save(booking);
+        log.info("Booking with id = "+booking.getId()+" was saved successfully");
     }
 
     @Override
     @Transactional
-    public void deleteBooking(Booking booking) {
-        bookingRepo.delete(booking);
+    public void deleteBooking(Booking booking) throws BookingNotFoundException {
+        deleteBooking(booking.getId());
         Person person = booking.getCustomer();
         personRepo.delete(person);
+        log.info("Booking with id = "+booking.getId()+" was deleted successfully");
     }
 
     @Override
@@ -94,14 +97,14 @@ public class BookingServiceImpl implements BookingService {
     public void deleteBooking(Long id) throws BookingNotFoundException {
         Booking booking = findBooking(id);
         if(booking==null){
+            log.info("Booking with id = "+id+" not found");
             throw new BookingNotFoundException("Бронь с таким id не существует");
         }
-        Person person = findBooking(id).getCustomer();
-        bookingRepo.delete(findBooking(id));
+        Person person = booking.getCustomer();
+        bookingRepo.delete(booking);
         personRepo.delete(person);
-
+        log.info("Booking with id = "+id+" was deleted successfully");
     }
-    //
 
     @Override
     @Scheduled(cron="0 0 3 * * ?") // Каждый день в 3:00
@@ -112,16 +115,20 @@ public class BookingServiceImpl implements BookingService {
         findAllBooking().stream().forEach(x-> {
             LocalDate date = x.getDate();
             if(date.isBefore(today)) {
-                deleteBooking(x);
-                log.debug("Booking deleted: "+x);
+                try {
+                    deleteBooking(x);
+                } catch (BookingNotFoundException e) {
+                    log.info("Booking with id = "+x.getId()+" not found");
+                }
             }
-
         });
     }
 
     @Override
     @Transactional
-    public Booking updateBooking(Booking booking) {
+    public Booking updateBooking(Booking booking) throws BookingNotFoundException {
+        findBooking(booking.getId());
+        log.info("Booking with id = "+booking.getId()+" was updated successfully");
         return bookingRepo.save(booking);
     }
 
