@@ -1,0 +1,11 @@
+2023-03-26 14:49:54,454 [http-nio-8080-exec-1] DEBUG ru.wolves.bookingsite.controllers.mvc.MainController - Debug message
+2023-03-26 14:49:54,456 [http-nio-8080-exec-1] INFO  ru.wolves.bookingsite.controllers.mvc.MainController - Info message
+2023-03-26 14:49:54,456 [http-nio-8080-exec-1] WARN  ru.wolves.bookingsite.controllers.mvc.MainController - Warn message
+2023-03-26 14:49:54,457 [http-nio-8080-exec-1] ERROR ru.wolves.bookingsite.controllers.mvc.MainController - Error message
+2023-03-26 14:52:11 [http-nio-8080-exec-1] DEBUG ru.wolves.bookingsite.controllers.mvc.MainController - Debug message
+2023-03-26 14:52:11 [http-nio-8080-exec-1] INFO  ru.wolves.bookingsite.controllers.mvc.MainController - Info message
+2023-03-26 14:52:11 [http-nio-8080-exec-1] WARN  ru.wolves.bookingsite.controllers.mvc.MainController - Warn message
+2023-03-26 14:52:11 [http-nio-8080-exec-1] ERROR ru.wolves.bookingsite.controllers.mvc.MainController - Error message
+2023-03-26 14:57:18 [http-nio-8080-exec-1] INFO  ru.wolves.bookingsite.controllers.mvc.MainController - Info message
+2023-03-26 14:57:18 [http-nio-8080-exec-1] WARN  ru.wolves.bookingsite.controllers.mvc.MainController - Warn message
+2023-03-26 14:57:18 [http-nio-8080-exec-1] ERROR ru.wolves.bookingsite.controllers.mvc.MainController - Error message

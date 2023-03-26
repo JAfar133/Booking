@@ -2,13 +2,13 @@ package ru.wolves.bookingsite.services.impl;
 
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.wolves.bookingsite.controllers.mvc.MainController;
 import ru.wolves.bookingsite.exceptions.BookingNotFoundException;
 import ru.wolves.bookingsite.models.Booking;
 import ru.wolves.bookingsite.models.Person;
@@ -29,7 +29,7 @@ import java.util.Optional;
 public class BookingServiceImpl implements BookingService {
     private final BookingRepo bookingRepo;
     private final PersonRepo personRepo;
-    static final Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
+    private static org.apache.log4j.Logger log = Logger.getLogger(MainController.class);
 
     @Autowired
     public BookingServiceImpl(BookingRepo bookingRepo, PersonRepo personRepo) {
