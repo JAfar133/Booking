@@ -63,7 +63,6 @@ public class BookingServiceImpl implements BookingService {
         person.getBookingList().add(booking);
         booking.setCustomer(person);
         saveBooking(booking);
-        log.info("Booking with id = "+booking.getId()+" was saved successfully");
     }
 
     private String getLastNameInitials(Person person){

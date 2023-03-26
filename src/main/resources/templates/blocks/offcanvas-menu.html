@@ -1,0 +1,32 @@
+<!-- Offcanvas Menu Section Begin -->
+<div  th:fragment="offcanvas-menu">
+  <div class="offcanvas-menu-overlay"></div>
+  <div class="canvas-open">
+    <i class="icon_menu"></i>
+  </div>
+  <div class="offcanvas-menu-wrapper">
+    <div class="canvas-close">
+      <i class="icon_close"></i>
+    </div>
+
+    <nav class="mainmenu mobile-menu">
+      <ul>
+        <li><a th:href="@{/}">Домашняя страница</a></li>
+        <li class="rooms-li"><a th:href="@{/rooms}">Помещения</a></li>
+        <li><a th:href="@{/about-us}">О нас</a></li>
+        <li><a th:href="@{/blog}">Новости</a></li>
+        <li><a th:href="@{/contact}">Контакты</a></li>
+      </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+    <div class="top-social">
+      <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
+      <a href="#"><i class="fa fa-twitter"></i></a>
+      <a href="#"><i class="fa fa-instagram"></i></a>
+    </div>
+    <ul class="tn-left">
+      <li><i class="fa fa-phone"></i> +7 (978) 130 0282</li>
+      <li><i class="fa fa-envelope"></i> info.wolve@gmail.com</li>
+    </ul>
+  </div>
+</div>

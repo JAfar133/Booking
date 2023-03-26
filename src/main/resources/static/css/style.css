@@ -892,7 +892,7 @@ ul, ol {
 	transition: all 0.3s;
 }
 /*------------------------
-  Home Page Room Section 
+  Home Page Room Section
 -------------------------*/
 
 .hp-room-items {
@@ -2136,15 +2136,20 @@ ul, ol {
 	padding: 14px 34px 13px;
 	display: inline-block;
 }
-.map {
-	height: 470px;
+.map, #map{
 	-webkit-box-shadow: 0px 14px 35px rgba(0, 0, 0, 0.15);
 	box-shadow: 0px 14px 35px rgba(0, 0, 0, 0.15);
 	margin-top: 75px;
 }
-.map iframe {
+.map iframe{
 	width: 100%;
 }
+#map {
+	height: 500px;
+	padding: 0;
+}
+
+
 /*-------------------------------- Respinsive Media Styles --------------------------------*/
 
 @media only screen and (min-width: 1554px) and (max-width: 1920px) {
@@ -2179,14 +2184,14 @@ ul, ol {
 	}
 }
 @media only screen and (max-width: 991px) {
+	.hero-text h1 {
+		font-size: 50px;
+	}
 	.top-nav {
 		display: none;
 	}
 	.booking-form {
 		width:auto;
-	}
-	.menu-item .nav-menu {
-		display: none;
 	}
 	.offcanvas-menu-overlay {
 		position: fixed;
@@ -2196,7 +2201,7 @@ ul, ol {
 		z-index: 98;
 		height: 100%;
 		width: 100%;
-		visibility: visible;
+		visibility: hidden;
 		-webkit-transition: 0.3s;
 		-o-transition: 0.3s;
 		transition: 0.3s;
@@ -2231,7 +2236,7 @@ ul, ol {
 		overflow-y: auto;
 		height: 100%;
 		opacity: 0;
-		visibility: visible;
+		visibility: hidden;
 		-webkit-transition: all 0.5s;
 		-o-transition: all 0.5s;
 		transition: all 0.5s;
@@ -2315,19 +2320,22 @@ ul, ol {
 		transition: all 0.3s;
 	}
 	.offcanvas-menu-wrapper .header-configure-area .language-option .flag-dropdown ul li a:hover {
-		color: #216DDF;
+		color: #dfa974;
 	}
 	.offcanvas-menu-wrapper .header-configure-area .bk-btn {
 		display: inline-block;
 		font-size: 13px;
 		font-weight: 700;
 		padding: 16px 28px 15px;
-		background: #216DDF;
+		background: #dfa974;
 		color: #ffffff;
 		text-transform: uppercase;
 		letter-spacing: 2px;
 	}
 	.offcanvas-menu-wrapper .mainmenu {
+		display: none;
+	}
+	.menu-item .nav-menu{
 		display: none;
 	}
 	.offcanvas-menu-wrapper .slicknav_menu {
@@ -2363,7 +2371,7 @@ ul, ol {
 	.offcanvas-menu-wrapper .slicknav_menu .slicknav_nav ul li a:hover {
 		border-radius: 0;
 		background: transparent;
-		color: #216DDF;
+		color: #dfa974;
 	}
 	.offcanvas-menu-wrapper .slicknav_menu .slicknav_nav .slicknav_row a {
 		border-bottom: 0;
@@ -2379,10 +2387,10 @@ ul, ol {
 		transition: all 0.3s;
 	}
 	.offcanvas-menu-wrapper .slicknav_menu .slicknav_nav .slicknav_row:hover a {
-		color: #216DDF;
+		color: #dfa974;
 	}
 	.offcanvas-menu-wrapper .slicknav_menu .slicknav_nav .slicknav_row:hover span {
-		color: #216DDF;
+		color: #dfa974;
 	}
 	.offcanvas-menu-wrapper .top-social {
 		display: inline-block;
@@ -2406,7 +2414,7 @@ ul, ol {
 		line-height: 28px;
 	}
 	.offcanvas-menu-wrapper .top-widget li i {
-		color: #216DDF;
+		color: #dfa974;
 		margin-right: 4px;
 	}
 	.offcanvas-menu-wrapper.show-offcanvas-menu-wrapper {

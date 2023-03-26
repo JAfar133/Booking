@@ -17,8 +17,12 @@
 </head>
 
 <body>
-    <div th:insert="~{blocks/header :: header}"></div>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
+    <div th:insert="~{blocks/offcanvas-menu :: offcanvas-menu}"></div>
+    <header th:insert="~{blocks/header :: header}"></header>
     <!-- Modal -->
     <div th:insert="~{blocks/modal :: modal}"></div>
     <div th:insert="~{blocks/success-alert :: success-alert}"></div>

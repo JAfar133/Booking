@@ -21,4 +21,17 @@ public class MainController {
         model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
         return "index";
     }
+
+    @GetMapping("/about-us")
+    public String aboutUsPage(){
+        return "about-us";
+    }
+    @GetMapping("/blog")
+    public String blogPage(){
+        return "blog";
+    }
+    @GetMapping("/contact")
+    public String contactPage(){
+        return "contact";
+    }
 }

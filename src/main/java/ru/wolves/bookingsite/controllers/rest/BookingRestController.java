@@ -90,8 +90,6 @@ public class BookingRestController {
         return ResponseEntity.badRequest().body(result);
     }
 
-
-
     private Person convertToPerson(PersonDTO personDTO){
         return modelMapper.map(personDTO,Person.class);
     }
