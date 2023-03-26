@@ -1,7 +1,7 @@
 package ru.wolves.bookingsite.controllers.mvc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,7 @@ import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 @Controller
 public class MainController {
     private final RoomHallServiceImpl roomHallServiceImpl;
-    private static Logger log = LoggerFactory.getLogger(MainController.class);
+    private static Logger log = Logger.getLogger(MainController.class);
 
 
     @Autowired
@@ -21,6 +21,12 @@ public class MainController {
     }
     @GetMapping("/")
     public String mainPage(Model model){
+        log.debug("Debug message");
+        log.info("Info message");
+        log.warn("Warn message");
+        log.error("Error message");
+        log.trace("trace message");
+
         model.addAttribute("halls", roomHallServiceImpl.findAllRoomHall());
         return "index";
     }
