@@ -152,6 +152,9 @@ jQuery(function ($) {
 		Nice Select
 	--------------------*/
     $("select").niceSelect();
+    if($(window).width() < 1300 && $(window).width() > 991) {
+        $(".nice-select span").css({"font-size": "10pt"})
+    };
     if($(window).width() < 991) {
         $(".nice-select span").css({"font-size": "14pt"})
     };

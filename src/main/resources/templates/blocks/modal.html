@@ -1,4 +1,4 @@
-<div th:fragment="modal">
+<div th:fragment="modal" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" >
             <div class="modal-content">
@@ -15,7 +15,8 @@
                                    type="text"
                                    name="last_name"
                                    id="last_name"
-                                   required>
+                                   required
+                                   th:value="${session.person?.lastName}">
 <!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>-->
                         </div>
 
@@ -25,7 +26,8 @@
                                    type="text"
                                    name="first_name"
                                    id="first_name"
-                                   required>
+                                   required
+                                   th:value="${session.person?.firstName}">
 <!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>-->
                         </div>
                         <div class="check-date form">
@@ -34,7 +36,8 @@
                                    type="text"
                                    name="middle_name"
                                    id="middle_name"
-                                   required>
+                                   required
+                                   th:value="${session.person?.middleName}">
 <!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"/>-->
                         </div>
                         <div class="check-date form">
@@ -43,7 +46,8 @@
                                    type="text"
                                    name="phone"
                                    id="phone"
-                                   required>
+                                   required
+                                   th:value="${session.person?.phoneNumber}">
                             <div id="phone-error-alert" class="alert alert-danger" style="display: none"/>
                         </div>
                         <div class="select-option">
@@ -60,18 +64,19 @@
                                 <input type="text"
                                        name="institute"
                                        id="institute"
-                                       required>
-<!--                                <div class="alert alert-danger" th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"/>-->
+                                       required
+                                       th:value="${session.person?.institute}">
                             </div>
 
                             <div class="select-option">
                                 <label for="course">Курс</label>
                                 <select style="color: #6C757D" id = "course" aria-label="Default select example">
                                     <option th:value="'-1'" disabled th:text="Курс"></option>
-                                    <option th:value="'1'" selected th:text="1"></option>
-                                    <option th:value="'2'"th:text="2"></option>
-                                    <option th:value="'3'"th:text="3"></option>
-                                    <option th:value="'4'"th:text="4"></option>
+                                    <option th:each="number : ${#numbers.sequence(1, 4, 1)}"
+                                            th:value="${number}"
+                                            th:text="${number}"
+                                            th:selected="${session.person !=null ? session.person.course == number : number == 1}">
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -79,15 +84,16 @@
                             <label for="structure">Структура ⃰ </label>
                             <input type="text"
                                    name="structure"
-                                   id="structure">
-<!--                            <div class="alert alert-danger" th:if="${#fields.hasErrors('structure')}" th:errors="*{structure}"/>-->
+                                   id="structure"
+                                   th:value="${session.person?.structure}">
                         </div>
                         <div class="check-date form">
                             <label for="comment">Комментарий:</label>
                             <textarea
                                     type="text"
                                     name="comment"
-                                    id="comment"></textarea>
+                                    id="comment">
+                            </textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

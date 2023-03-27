@@ -2,6 +2,7 @@ package ru.wolves.bookingsite.controllers.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +63,7 @@ public class BookingRestController {
 
     @PostMapping("/booking")
     public ResponseEntity<?> saveBookingWithPersonDetails(
-            @RequestBody Map<String, Object> requestBody) {
+            @RequestBody Map<String, Object> requestBody, HttpSession session) {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
 
         Booking booking = convertToBooking(objectMapper.convertValue(
@@ -78,7 +79,7 @@ public class BookingRestController {
         }
 
         bookingService.savePersonWithBooking(person,booking);
-
+        session.setAttribute("person",person);
         result.setObject(convertToBookingDTO(booking));
         result.setMsg("Booking saved");
 
