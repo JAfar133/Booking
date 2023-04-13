@@ -39,12 +39,11 @@ public class BookingValidator {
                 if(booking1.getTimeStart().before(booking.getTimeStart())) {
                     if (booking1.getTimeEnd().after(booking.getTimeStart())) {
                         msg.addError("424","place","Помещение занято в это время");
-                        return;
                     }
                 } else {
                     if(booking.getTimeEnd().after(booking1.getTimeStart())  )
                         msg.addError("424","place","Помещение занято в это время");
-                        return;
+
                 }
             }
         });

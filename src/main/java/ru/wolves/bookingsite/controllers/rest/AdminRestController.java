@@ -51,8 +51,9 @@ public class AdminRestController {
                              @RequestBody BookingDTO bookingDTO, Model model) throws BookingNotFoundException {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
         Booking booking = bookingService.findBooking(id);
-
-        bookingValidator.validate(convertToBooking(bookingDTO), result);
+        Booking validBooking = convertToBooking(bookingDTO);
+        validBooking.setPlace(booking.getPlace());
+        bookingValidator.validate(validBooking, result);
         if(result.hasErrors()){
             result.setMsg("Error");
             return ResponseEntity.badRequest().body(result);

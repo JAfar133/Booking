@@ -1,5 +1,6 @@
 package ru.wolves.bookingsite.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -27,6 +28,7 @@ public class RoomHall {
     @Column(name = "lat")
     private String lat;
 
+    @JsonIgnore // Исключаем список Booking из сериализации в JSON
     @OneToMany(mappedBy = "place")
     private List<Booking> bookings;
 

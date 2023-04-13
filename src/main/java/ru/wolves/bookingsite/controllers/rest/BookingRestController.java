@@ -17,6 +17,8 @@ import ru.wolves.bookingsite.services.impl.RoomHallServiceImpl;
 import ru.wolves.bookingsite.util.BookingValidator;
 import ru.wolves.bookingsite.util.PersonValidator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -66,8 +68,9 @@ public class BookingRestController {
             @RequestBody Map<String, Object> requestBody, HttpSession session) {
         JsonResultMessageDTO result = new JsonResultMessageDTO();
 
-        Booking booking = convertToBooking(objectMapper.convertValue(
-                requestBody.get("bookingDTO"), BookingDTO.class));
+        BookingDTO bDTO = objectMapper.convertValue(
+                requestBody.get("bookingDTO"), BookingDTO.class);
+        Booking booking = convertToBooking(bDTO);
         Person person = convertToPerson(objectMapper.convertValue(
                 requestBody.get("personDTO"), PersonDTO.class));
 
@@ -77,13 +80,35 @@ public class BookingRestController {
         if(result.hasErrors()){
             return getErrorResponse(result);
         }
-
+        booking.setPlace(roomHallService.findRoom(bDTO.getPlaceId()));
         bookingService.savePersonWithBooking(person,booking);
         session.setAttribute("person",person);
         result.setObject(convertToBookingDTO(booking));
         result.setMsg("Booking saved");
 
         return ResponseEntity.ok(result);
+    }
+    @CrossOrigin(origins = "http://localhost:8082")
+    @GetMapping("/bookings")
+    public ResponseEntity<?> findAllBookings(){
+        System.out.println("Im here");
+        List<Booking> allBooking = bookingService.findAllBooking();
+        List<BookingDTO> bookings = new ArrayList<>();
+        for(Booking b: allBooking) {
+            bookings.add(convertToBookingDTO(b));
+        }
+        if(allBooking==null) {
+            ResponseEntity.badRequest();
+        }
+        return ResponseEntity.ok(bookings);
+    }
+    @GetMapping("/unconfirmed-bookings")
+    public ResponseEntity<?> findAllUnconfirmedBookings(){
+        List<Booking> allBooking = bookingService.findAllUnConfirmedBooking();
+        if(allBooking==null) {
+            ResponseEntity.badRequest();
+        }
+        return ResponseEntity.ok(allBooking);
     }
 
     private ResponseEntity<?> getErrorResponse(JsonResultMessageDTO result){

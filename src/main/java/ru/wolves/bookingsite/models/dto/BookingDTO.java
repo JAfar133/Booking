@@ -3,6 +3,7 @@ package ru.wolves.bookingsite.models.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.wolves.bookingsite.models.Person;
@@ -26,9 +27,13 @@ public class BookingDTO {
     private Date timeEnd;
 
     private Long placeId;
+    @JsonDeserialize(using = RoomHallDeserializer.class)
+    private RoomHall place;
     private PersonDTO customer;
     private String comment;
     private boolean confirmed;
+
+
 
     public BookingDTO() {
     }
@@ -81,6 +86,9 @@ public class BookingDTO {
         this.timeEnd = timeEnd;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bookedAt;
+
     public Long getPlaceId() {
         return placeId;
     }
@@ -89,11 +97,27 @@ public class BookingDTO {
         this.placeId = placeId;
     }
 
+    public RoomHall getPlace() {
+        return place;
+    }
+
+    public void setPlace(RoomHall place) {
+        this.place = place;
+    }
+
     public boolean isConfirmed() {
         return confirmed;
     }
 
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
+    }
+
+    public Date getBookedAt() {
+        return bookedAt;
+    }
+
+    public void setBookedAt(Date bookedAt) {
+        this.bookedAt = bookedAt;
     }
 }

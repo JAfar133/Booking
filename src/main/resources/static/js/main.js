@@ -208,14 +208,9 @@ $('.myFreeDate .block-date').each(function (){
     var timeStart = $(this).find('div').eq(0).text().replaceAll(':','.');
     var timeEnd = $(this).find('div').eq(1).text().replaceAll(':','.');
     var dx = timeEnd - timeStart;
-    console.log(timeStart+" "+ timeEnd);
-    console.log(dx);
     var width = $('.myFreeDate').css("width").replaceAll('px','');
     var pixels = 100*dx/hundred*10+"px";
     var percent = dx/hundred*width*0.95+"px";
-    console.log(pixels);
-    console.log(percent);
-    console.log(width);
     if(dx==hundred){
 
         width = Number(width);
@@ -310,12 +305,10 @@ function booking_ajax_submit() {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            console.log("SUCCESS : ", data);
             $("#booking-submit-btn").prop("disabled", false);
             $('#exampleModal').modal('show');
         },
         error: function (e) {
-            console.log("ERROR : ", e);
             $.each(e.responseJSON.errors, function (index, value) {
                 // Помещение занято
                 if(value.field=="place"){
@@ -360,14 +353,13 @@ function person_ajax_submit() {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            console.log("SUCCESS : ", data);
             $("#person-details-submit-btn").prop("disabled", false);
             $('#exampleModal').modal('toggle'); // Закрываем попап для регистр.
             $('#alert-success').modal('show'); // Открываем уведомление об успешной операции
 
         },
         error: function (e) {
-            console.log("ERROR : ", e);
+            
             $.each(e.responseJSON.errors, function (index, value) {
                 // Неправильный номер телефона
                 if(value.field=="phoneNumber"){
@@ -418,14 +410,13 @@ function admin_change_date_ajax_submit(booking_id, modal_id) {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            console.log("SUCCESS : ", data);
             $(btn_id).prop("disabled", false);
             $(modal_id).modal('toggle'); // Закрываем попап
             $(booking_card_id).addClass("alert-success");
             $(booking_card_id).fadeOut(500, function(){ $(this).remove();}); // Убираем заказ со страницы
         },
         error: function (e) {
-            console.log("ERROR : ", e);
+            
             $.each(e.responseJSON.errors, function (index, value) {
                 // Помещение занято
                 if(value.code=="424"){
@@ -453,13 +444,12 @@ function admin_confirm_ajax_submit(booking_id, btn_id) {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            console.log("SUCCESS : ", data);
             $(btn_id).prop("disabled", false);
             $(booking_card_id).addClass("alert-success");
             $(booking_card_id).fadeOut(500, function(){ $(this).remove();});
         },
         error: function (e) {
-            console.log("ERROR : ", e);
+            
             $(btn_id).prop("disabled", false);
         }
     });
@@ -475,13 +465,12 @@ function admin_delete_ajax_submit(booking_id, btn_id) {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            console.log("SUCCESS : ", data);
             $(btn_id).prop("disabled", false);
             $(booking_card_id).addClass("alert-danger");
             $(booking_card_id).fadeOut(500, function(){ $(this).remove();});
         },
         error: function (e) {
-            console.log("ERROR : ", e);
+            
             $(btn_id).prop("disabled", false);
         }
     });
